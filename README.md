@@ -9,15 +9,10 @@
 
 ### 有图有真相 android 4.2的系统
 
-> 主屏幕
 ![github](https://github.com/MaybeMercy/coolgrammar/blob/master/screenshot/main.png "主屏幕")
-> 标签界面
 ![github](https://github.com/MaybeMercy/coolgrammar/blob/master/screenshot/tab.png "标签界面")
-> 语法显示界面
 ![github](https://github.com/MaybeMercy/coolgrammar/blob/master/screenshot/grammar.png "语法界面")
-> 测试界面
 ![github](https://github.com/MaybeMercy/coolgrammar/blob/master/screenshot/test.png "测试界面")
-> 结果显示界面
 ![github](https://github.com/MaybeMercy/coolgrammar/blob/master/screenshot/result.png "结果界面")
 
 ### 链接
