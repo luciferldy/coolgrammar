@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+	编号：5.1
+	功能：这个程序是和error_analyse一起的，本来想写在一起，然后通过隐藏来实现，但是后来感觉还是有点不好
+	时间：2014年9月18日 -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/RelativeLayout5_5"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" > 
+    
+    <RelativeLayout
+        android:id="@+id/rl_contain_back"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp">
+        <ImageButton 
+            android:id="@+id/imgbtn_back_insg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="返回键"
+            android:src="@drawable/ic_action_back"
+            android:background="#00000000"/>
+    </RelativeLayout>
+
+    <Button 
+        android:id="@+id/button5_6"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="60dp"
+        android:layout_alignParentBottom="true"
+        android:text="@string/button5_6"/>
+
+    <LinearLayout
+        android:id="@+id/linearLayout5_7"
+        android:layout_height="fill_parent"
+        android:layout_width="fill_parent"
+        android:minHeight="120dp"
+        android:layout_below="@id/rl_contain_back"
+        android:layout_above="@id/button5_6"
+        android:orientation="vertical">
+        <TextView
+	        android:id="@+id/textView5_4"
+	        android:layout_width="fill_parent"
+	        android:layout_height="0dp"
+	        android:layout_weight="1"
+	        android:minHeight="120dp"
+	        android:gravity="center"
+	        android:background="#4FBAB4"
+	        android:text="正确率\n10/10"
+	        android:textSize="25sp" />
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.5">
+
+            <TextView
+                android:id="@+id/textView5_5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="5dp"
+                android:gravity="bottom|center_horizontal"
+                android:text="@string/textView5_5"
+                android:textSize="23sp" />
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.5">
+        	<RatingBar
+             android:id="@+id/ratingBar5_1"
+             style="?android:attr/ratingBarStyleSmall"
+             android:layout_width="wrap_content"
+             android:layout_height="50dp"
+             android:layout_marginTop="10dp"
+             android:layout_alignParentTop="true"
+             android:layout_centerHorizontal="true"
+             android:numStars="5" />   
+        </RelativeLayout>
+        <TextView
+		     android:id="@+id/textView5_6"
+		     android:layout_width="fill_parent"
+		     android:layout_height="0dp"
+		     android:layout_weight="1"
+		     android:minHeight="120dp"
+		     android:background="#F6B249"
+		     android:paddingTop="5dp"
+		     android:gravity="center"
+		     android:text="时间\n00：00：06"
+		     android:textSize="23sp" />
+    </LinearLayout>
+	          
+    
+	    
+
+</RelativeLayout>

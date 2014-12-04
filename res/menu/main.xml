@@ -1,0 +1,19 @@
+<!-- 编号：0.5
+	  功能：菜单选项
+	  时间：2014年8月25日
+	  最近一次修改时间：8月15日 -->
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+      
+    <item
+        android:id="@+id/action_delete_db"
+        android:orderInCategory="100"
+        android:icon="@drawable/ic_action_discard"
+        android:showAsAction="always"
+        android:title="@string/action_1"/>
+	<item 
+	    android:id="@+id/action_exit"
+	    android:orderInCategory="100"
+	    android:showAsAction="never"
+	    android:title="退出"/>
+	
+</menu>

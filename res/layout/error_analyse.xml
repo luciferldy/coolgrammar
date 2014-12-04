@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 编号：5
+	  功能说明：这个是错误分析部分的布局 ,视图我暂时就分成两个部分，一个是显示成就界面的，另一个是显示错题解析的 
+	  时间：2014年8月27日 
+	  整体线性布局，方向为垂直 -->
+<RelativeLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/RelativeLayout5_1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin" >    
+        
+    <ScrollView
+     android:id="@+id/scrollView5_1"
+     android:layout_width="fill_parent"
+     android:layout_height="wrap_content"
+     android:layout_marginTop="30dp"
+     android:layout_alignParentTop="true"
+     android:layout_above="@+id/LinearLayout5_3" >
+     
+     <LinearLayout
+         android:id="@+id/LinearLayout5_1"
+         android:layout_width="fill_parent"
+         android:layout_height="wrap_content"
+         android:orientation="vertical"
+         android:layout_marginLeft="10dp"
+         android:layout_marginRight="10dp">
+         
+         <TextView
+		    android:id="@+id/textView5_1"
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:textSize="20sp"
+		    android:text="I haven’t seen Sarah since she was a little girl ,and she has changed beyond ___." />
+		 
+		 <RadioGroup 
+		       android:id="@+id/radiogroup5_1"
+		       android:layout_width="fill_parent"
+		       android:layout_height="wrap_content"
+		       android:layout_marginTop="10dp"
+		       android:orientation="vertical" >
+		       <RadioButton 
+		           android:id="@+id/radiobutton5_1"
+		           android:layout_width="fill_parent"
+		           android:layout_height="wrap_content"
+		           android:layout_marginTop="@dimen/radiobtn_divider_distance"
+		           android:text="A. hearing"
+		           android:clickable="false"/>
+		       <RadioButton 
+		           android:id="@+id/radiobutton5_2"
+		           android:layout_width="fill_parent"
+		           android:layout_height="wrap_content"
+		           android:layout_marginTop="@dimen/radiobtn_divider_distance"
+		           android:text="B. strength"
+		           android:clickable="false"/>
+		       <RadioButton 
+		           android:id="@+id/radiobutton5_3"
+		           android:layout_width="fill_parent"
+		           android:layout_height="wrap_content" 
+		           android:layout_marginTop="@dimen/radiobtn_divider_distance"
+		           android:clickable="false"
+		           android:text="C. recognition"/>
+		       <RadioButton 
+		           android:id="@+id/radiobutton5_4"
+		           android:layout_width="fill_parent"
+		           android:layout_height="wrap_content"
+		           android:layout_marginTop="@dimen/radiobtn_divider_distance"
+		           android:clickable="false"
+		           android:text="D. measures"/>
+		  </RadioGroup>
+   
+		  <TextView 
+	          android:id="@+id/textView5_2"
+	          android:layout_width="fill_parent"
+	          android:layout_height="wrap_content"
+	          android:layout_marginTop="10dp"
+	          android:textSize="14sp"
+	          android:text="hello" />
+	      <TextView 
+	          android:id="@+id/textView5_3"
+	          android:layout_width="fill_parent"
+	          android:layout_height="wrap_content"
+	          android:layout_marginTop="10dp"
+	          android:textSize="14sp"
+	          android:text="clip" />
+     </LinearLayout>    
+ </ScrollView>
+ <LinearLayout
+     android:id="@+id/LinearLayout5_3"
+     android:layout_width="fill_parent"
+     android:layout_height="wrap_content"
+     android:layout_alignParentBottom="true"
+     android:layout_marginBottom="20dp"
+     android:orientation="horizontal" >
+
+     <ImageButton
+         android:id="@+id/button5_3"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:src="@drawable/ic_action_back"
+         android:background="#00000000"
+         android:layout_weight="1"
+         android:contentDescription="@string/button5_3" />
+
+     <ImageButton
+         android:id="@+id/button5_4"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:src="@drawable/ic_action_forward"
+         android:background="#00000000"
+         android:layout_weight="1"
+         android:contentDescription="@string/button5_4" />
+
+     <ImageButton
+         android:id="@+id/button5_5"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:src="@drawable/ic_action_undo"
+         android:background="#00000000"
+         android:layout_weight="1"
+         android:contentDescription="@string/button5_5" />
+ </LinearLayout>
+      
+ </RelativeLayout>
+
+     

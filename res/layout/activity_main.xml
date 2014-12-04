@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 编号：0
+	  功能说明：这个开始界面的View，包含了Grammer，Test，Review部分
+	  时间：2014年8月8日 -->
+<android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    
+    <TabHost android:id="@+id/tabhost" 
+    
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    tools:context=".MainActivity">
+	   
+	    <LinearLayout
+	        android:id="@+id/LinearLayout0_1"
+	        android:orientation="vertical"
+	        android:layout_width="fill_parent"
+	        android:layout_height="fill_parent">
+	
+	        <TabWidget
+	            android:id="@android:id/tabs"
+	            android:layout_width="match_parent"
+	            android:layout_height="50dp" >
+	        </TabWidget>
+	        
+	        <FrameLayout
+	            android:id="@android:id/tabcontent"
+	            android:layout_width="fill_parent"
+	            android:layout_height="fill_parent" >
+	            
+	            <LinearLayout 
+	                android:id="@+id/tab0_1"
+	                android:layout_width="fill_parent"
+	                android:layout_height="fill_parent"
+	                android:orientation="vertical" >
+	                
+	                <ListView
+	                    android:id="@+id/list_View0_1"
+	                    android:layout_width="fill_parent"
+	                    android:layout_height="fill_parent"
+	                    android:dividerHeight="1dp"
+	                    android:divider="#DDDDDD">
+	                </ListView>
+	    		</LinearLayout>
+	    		<LinearLayout 
+	    		    android:id="@+id/tab0_2"
+	    		    android:layout_width="fill_parent"
+	    		    android:layout_height="fill_parent"
+	    		    android:orientation="vertical" >
+	                
+	    		    <ListView
+	    		        android:id="@+id/list_View0_2"
+	    		        android:layout_width="fill_parent"
+	    		        android:layout_height="fill_parent"
+	    		        android:dividerHeight="1dp"
+	    		        android:divider="#DDDDDD">
+	    		    </ListView>
+	    		</LinearLayout>
+	    	</FrameLayout>
+	    </LinearLayout>
+	</TabHost>
+	<ListView
+	    android:id="@+id/listview_left_menu_main"
+	    android:layout_width="240dp"
+	    android:layout_height="match_parent"
+	    android:layout_gravity="start"
+	    android:background="#FFFFFF"
+	    android:dividerHeight="1dp"
+	    android:divider="#DDDDDD">
+	</ListView>    
+</android.support.v4.widget.DrawerLayout>

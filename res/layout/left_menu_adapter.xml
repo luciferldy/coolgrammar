@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/left_menu_main"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
+    android:background="@drawable/listview_item">
+    <ImageView
+        android:id="@+id/imgview_main_leftmenu"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_marginRight="20dp"
+        android:contentDescription="帮助"
+        android:src="@drawable/ic_action_help"/>
+    
+    <TextView
+        android:id="@+id/textview_main_leftmenu"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:gravity="center_vertical"
+        android:layout_toRightOf="@id/imgview_main_leftmenu"
+        android:layout_alignTop="@id/imgview_main_leftmenu"
+        android:layout_alignBottom="@id/imgview_main_leftmenu"
+        android:text="帮助"/>
+        
+</RelativeLayout>    
+

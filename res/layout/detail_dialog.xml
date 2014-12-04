@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+	编号：08
+	功能：显示词库详细信息的对话框的布局
+	创建时间：20140915
+	 -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/linear_detail"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/adapter_vertical_padding"
+    android:paddingBottom="@dimen/adapter_vertical_padding"
+    android:paddingLeft="@dimen/adapter_horizontal_padding"
+    android:paddingRight="@dimen/adapter_horizontal_padding" >
+    
+    <TextView 
+        android:id="@+id/tv_detail_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="名词专项（一）"/>
+
+    <TextView 
+        android:id="@+id/tv_detail_descrip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="包含名词的习题以及解释"/>
+    <TextView 
+        android:id="@+id/tv_detial_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="题目数量：10"/>
+    <TextView 
+        android:id="@+id/tv_detail_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="创建日期：20140915"/>
+    
+</LinearLayout>
