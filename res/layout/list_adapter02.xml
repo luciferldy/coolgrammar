@@ -11,7 +11,7 @@
     android:descendantFocusability="blocksDescendants"
     android:background="@drawable/listview_item" >
         
-    <LinearLayout 
+    <RelativeLayout 
         android:id="@+id/linearLayout3_1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -26,6 +26,7 @@
 		    android:id="@+id/textView3_1"
 		    android:layout_width="wrap_content"
 		    android:layout_height="wrap_content"
+		    android:layout_alignParentLeft="true"
 		    android:textSize="16sp"
 		    android:text="@string/textView3_1"
 		    android:gravity="center_vertical"
@@ -36,21 +37,11 @@
             android:layout_marginTop="6dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@id/textView3_1"
             android:isIndicator="true"
             android:numStars="5"
             android:rating="0" />
-    </LinearLayout>
-   
-
-    <RelativeLayout
-        android:id="@+id/RelativeLayout3_2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@id/linearLayout3_1"
-        android:layout_alignBottom="@id/linearLayout3_1"
-        android:layout_alignParentRight="true"
-        android:layout_toRightOf="@id/linearLayout3_1">
-
         <ImageButton
             android:id="@+id/imageButton3_1"
             android:layout_width="wrap_content"
