@@ -48,7 +48,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -142,7 +141,7 @@ public class MainActivity extends Activity {
 		hashMap.put("img", R.drawable.ic_action_download);
 		arraylist_main_leftmenu.add(hashMap);
 		hashMap = new HashMap<String, Object>();
-		hashMap.put("title", "设置");
+		hashMap.put("title", "反馈");
 		hashMap.put("img", R.drawable.ic_action_settings);
 		arraylist_main_leftmenu.add(hashMap);
 		hashMap = new HashMap<String, Object>();
@@ -313,54 +312,14 @@ public class MainActivity extends Activity {
 		
 		//获取菜单项的Id
 		switch(item.getItemId()){
-		case R.id.action_delete_db:
-			AlertDialog.Builder builder = new Builder(MainActivity.this);
-			builder.setMessage("你确定删除数据库");
-			builder.setTitle("提示");
-			builder.setNegativeButton("确定", new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface arg0, int arg1) {
-					//这个是对话框要消失时的对话框
-					arg0.dismiss();
-					DeleteDatabase();
-				}
-			});
-			builder.setPositiveButton("取消", new DialogInterface.OnClickListener() {			
-				@Override
-				public void onClick(DialogInterface arg0, int arg1) {
-					arg0.dismiss();
-				}
-			});
-			builder.create().show();
+		case R.id.action_search:
 			break;
-//		case R.id.action_2:
-//			Intent intent = new Intent(MainActivity.this, DownloadLibrary.class);
-//			startActivity(intent);
-//			break;
 		case R.id.action_exit:
 			System.exit(0);
 		}
 		
 		//方法回调
 		return super.onOptionsItemSelected(item);
-	}
-
-	//删除数据库
-	public void DeleteDatabase(){
-		SQLiteDatabase mdb0_1 = null;
-		MyDBHelper mdbhelper = null;
-		try{
-			mdbhelper = new MyDBHelper(this);
-			mdb0_1 = mdbhelper.getReadableDatabase();
-			mdb0_1.close();
-			if(this.deleteDatabase(MyDBHelper.DATABASE_NAME));{
-				Toast.makeText(this, "delete database", Toast.LENGTH_SHORT).show();
-			}
-		}
-		catch(Exception e){
-			e.printStackTrace();
-			mdb0_1.close();
-		}
 	}
 	
 	// 长按菜单响应函数
@@ -500,9 +459,14 @@ public class MainActivity extends Activity {
 			}	
 			else if(arg0.getAdapter() == listview_main_left_menu.getAdapter()){
 				System.out.println("LeftMenu滑动菜单的单击事件");
+				Intent intent;
 				switch (arg2) {
 				case 0:
-					Intent intent = new Intent(MainActivity.this, DownloadLibrary.class);
+					intent = new Intent(MainActivity.this, DownloadLibrary.class);
+					startActivity(intent);
+					break;
+				case 1:
+					intent = new Intent(MainActivity.this, FeedBack.class);
 					startActivity(intent);
 					break;
 				default:

@@ -68,7 +68,6 @@ public class DownloadLibrary extends Activity{
 		setContentView(R.layout.download_lib);
 		ActionBar actionBar_in_dl = getActionBar();
 		actionBar_in_dl.setDisplayHomeAsUpEnabled(true);
-		
 		setProgressDialog();
 		new Thread(new getLibThread()).start();
 		//显示进度条框

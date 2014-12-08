@@ -10,7 +10,6 @@
     </style>
     
     <style name="ActivityTheme" parent="android:Theme.Holo.Light.NoActionBar">
-        
     </style>
 
 </resources>
