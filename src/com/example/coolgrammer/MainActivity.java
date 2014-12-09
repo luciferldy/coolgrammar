@@ -469,6 +469,10 @@ public class MainActivity extends Activity {
 					intent = new Intent(MainActivity.this, FeedBack.class);
 					startActivity(intent);
 					break;
+				case 2:
+					intent = new Intent(MainActivity.this, AboutGrammar.class);
+					startActivity(intent);
+					break;
 				default:
 					break;
 				}

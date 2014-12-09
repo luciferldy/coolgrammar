@@ -36,9 +36,10 @@
             android:name="com.example.coolgrammer.DownloadLibrary">
         </activity>
         <activity 
-            android:name="com.example.coolgrammer.FeedBack"
-            android:theme="@style/ActivityTheme">
+            android:name="com.example.coolgrammer.FeedBack">
         </activity>
+        <activity 
+            android:name="com.example.coolgrammer.AboutGrammar"></activity>
     </application>
 
 </manifest>

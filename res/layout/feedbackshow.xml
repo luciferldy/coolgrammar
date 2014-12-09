@@ -10,6 +10,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
+        android:layout_alignParentTop="true"
         android:textSize="20sp"
         android:text="欢迎您写下宝贵的意见和建议"/>
     <Button 
@@ -24,12 +25,14 @@
     <EditText
         android:id="@+id/feedback_content"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_below="@id/feedback_title"
+        android:layout_height="fill_parent"	
         android:layout_above="@id/feedback_commit"
+        android:layout_below="@id/feedback_title"
+        android:background="@drawable/edit_border"
         android:layout_margin="10dp"
-        android:paddingTop="10dp"
+        android:padding="10dp"
         android:inputType="text"
+        android:gravity="top"
         android:textSize="24sp" />
 
 </RelativeLayout>

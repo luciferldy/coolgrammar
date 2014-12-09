@@ -12,6 +12,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -20,6 +21,7 @@ import android.content.DialogInterface;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -35,6 +37,9 @@ public class FeedBack extends Activity{
 	protected void onCreate(Bundle savedInstanceBundle){
 		super.onCreate(savedInstanceBundle);
 		setContentView(R.layout.feedbackshow);
+		//添加一个回退键
+		ActionBar actionBar = getActionBar();
+		actionBar.setDisplayHomeAsUpEnabled(true);
 		setProgressDialog();
 		Button feedbackButton = (Button)findViewById(R.id.feedback_commit);
 		handler = new Handler();
@@ -109,6 +114,17 @@ public class FeedBack extends Activity{
 			e.printStackTrace();
 		}
 		
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item){
+		switch (item.getItemId()) {
+		case android.R.id.home:
+			finish();
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
 	}
 	
 	public class FeedbackCommitRunnable implements Runnable{
