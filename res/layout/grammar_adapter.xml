@@ -3,7 +3,7 @@
 	  功能：这个是主界面（编号0）显示语法的ListView的适配器
 	  时间：2014年8月9日 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/RelativeLayout2_1"
+    android:id="@+id/grammar_adapter"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:paddingTop="@dimen/adapter_vertical_padding"
@@ -13,18 +13,18 @@
     android:background="@drawable/listview_item">
     
     <TextView
-        android:id="@+id/textView2_1"
+        android:id="@+id/grammar_adapter_title"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:textSize="16sp"
         android:gravity="center_vertical"
         android:text="@string/textView2_1"/>
     <TextView 
-        android:id="@+id/textView2_2"
+        android:id="@+id/grammar_adapter_description"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-      	android:layout_below="@id/textView2_1"
+      	android:layout_below="@id/grammar_adapter_title"
         android:textSize="12sp"
         android:gravity="center_vertical"
         android:text="名词的种类，数，格等……" />

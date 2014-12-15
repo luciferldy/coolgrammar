@@ -53,9 +53,9 @@ public class DownloadLibrary extends Activity{
 	//固定的URL
 	private final static String BASE_URL = "http://1.coolgrammar.sinaapp.com/index.php?a=";
 	//ListView
-	ListView listView6_1 = null;
+	ListView download_lib_listview = null;
 	//泛型数组哦
-	ArrayList<HashMap<String, Object>> arraylist4_1 = null;
+	ArrayList<HashMap<String, Object>> store_lib_infor = null;
 	//进度条对话框
 	ProgressDialog proDialog = null;
 	//handler用post将消息压入堆栈
@@ -160,14 +160,14 @@ public class DownloadLibrary extends Activity{
 			MyDBHelper dbhelper_in_testlib = new MyDBHelper(getApplicationContext());
 			SQLiteDatabase sqlite_in_testlib = dbhelper_in_testlib.getWritableDatabase();
 			ContentValues content_in_testlib = new ContentValues();
-			content_in_testlib.put("id", (String)arraylist4_1.get(lib_order).get("id"));
-			content_in_testlib.put("grammarId", (String)arraylist4_1.get(lib_order).get("grammarId"));
-			content_in_testlib.put("title", (String)arraylist4_1.get(lib_order).get("title"));
-			content_in_testlib.put("description", (String)arraylist4_1.get(lib_order).get("description"));
-			content_in_testlib.put("itemCount", (String)arraylist4_1.get(lib_order).get("itemCount"));
-			content_in_testlib.put("level", (String)arraylist4_1.get(lib_order).get("level"));
-			content_in_testlib.put("createDate", (String)arraylist4_1.get(lib_order).get("createDate"));
-			content_in_testlib.put("downloadCount", (String)arraylist4_1.get(lib_order).get("downloadCount"));
+			content_in_testlib.put("id", (String)store_lib_infor.get(lib_order).get("id"));
+			content_in_testlib.put("grammarId", (String)store_lib_infor.get(lib_order).get("grammarId"));
+			content_in_testlib.put("title", (String)store_lib_infor.get(lib_order).get("title"));
+			content_in_testlib.put("description", (String)store_lib_infor.get(lib_order).get("description"));
+			content_in_testlib.put("itemCount", (String)store_lib_infor.get(lib_order).get("itemCount"));
+			content_in_testlib.put("level", (String)store_lib_infor.get(lib_order).get("level"));
+			content_in_testlib.put("createDate", (String)store_lib_infor.get(lib_order).get("createDate"));
+			content_in_testlib.put("downloadCount", (String)store_lib_infor.get(lib_order).get("downloadCount"));
 			sqlite_in_testlib.insert("TestLibrary", null, content_in_testlib);
 			sqlite_in_testlib.close();
 			return true;
@@ -199,8 +199,8 @@ public class DownloadLibrary extends Activity{
 						// TODO Auto-generated method stub
 						Toast.makeText(getApplicationContext(), "已下载成功！", Toast.LENGTH_LONG).show();
 						
-						ImageButton ib = (ImageButton)findViewById(R.id.imageButton7_1);
-						TextView tv = (TextView)findViewById(R.id.textView7_5);
+						ImageButton ib = (ImageButton)findViewById(R.id.download_lib_list_adapter_dl_img);
+						TextView tv = (TextView)findViewById(R.id.download_lib_list_adapter_dl_tv_ifexist);
 						ib.setClickable(false);
 						tv.setText("已下载！");
 					}
@@ -229,10 +229,10 @@ public class DownloadLibrary extends Activity{
 			InputStream input = new ByteArrayInputStream(str.getBytes("utf-8"));
 			
 			//解析xml
-			arraylist4_1 = analyseContent(input);
+			store_lib_infor = analyseContent(input);
 			
 			//没有成功解析或者存的是空的
-			if(arraylist4_1 == null || arraylist4_1.get(0) == null){
+			if(store_lib_infor == null || store_lib_infor.get(0) == null){
 				
 				System.out.println("无法成功解析!");
 				//让进度对话框消失
@@ -246,9 +246,9 @@ public class DownloadLibrary extends Activity{
 					@Override
 					public void run(){
 						//在post操作中操作UI组件
-						listView6_1 = (ListView)findViewById(R.id.listView6_1);
+						download_lib_listview = (ListView)findViewById(R.id.download_lib_listview);
 						DownloadAdapter dladapter = new DownloadAdapter(getApplicationContext());
-						listView6_1.setAdapter(dladapter);
+						download_lib_listview.setAdapter(dladapter);
 						DownloadLibrary.this.setTitle("下载！");
 					}	
 				});
@@ -497,7 +497,7 @@ public class DownloadLibrary extends Activity{
 		
 		@Override
 		public int getCount(){
-			return arraylist4_1.size();
+			return store_lib_infor.size();
 		}
 		
 		@Override
@@ -519,14 +519,14 @@ public class DownloadLibrary extends Activity{
 				mvg = new DownloadLibViewGroup();
 				
 				convertView = mInflater.inflate(R.layout.download_lib_list_adapter, null);
-				mvg.textView7_1 = (TextView)convertView.findViewById(R.id.textView7_1);
-				mvg.textView7_2 = (TextView)convertView.findViewById(R.id.textView7_2);
-				mvg.textView7_3 = (TextView)convertView.findViewById(R.id.textView7_3);
-				mvg.textView7_4 = (TextView)convertView.findViewById(R.id.textView7_4);
-				mvg.textView7_5 = (TextView)convertView.findViewById(R.id.textView7_5);
+				mvg.tv_title = (TextView)convertView.findViewById(R.id.download_lib_list_adapter_tv_title);
+				mvg.tv_description = (TextView)convertView.findViewById(R.id.download_lib_list_adapter_tv_description);
+				mvg.tv_number = (TextView)convertView.findViewById(R.id.download_lib_list_adapter_tv_time);
+				mvg.tv_time = (TextView)convertView.findViewById(R.id.download_lib_list_adapter_tv_time);
+				mvg.tv_ifexist = (TextView)convertView.findViewById(R.id.download_lib_list_adapter_dl_tv_ifexist);
 				
-				mvg.ratingBar7_1 = (RatingBar)convertView.findViewById(R.id.ratingBar7_1);
-				mvg.imageButton7_1 = (ImageButton)convertView.findViewById(R.id.imageButton7_1);
+				mvg.ratingBar = (RatingBar)convertView.findViewById(R.id.download_lib_list_adapter_ratingbar);
+				mvg.imageButton = (ImageButton)convertView.findViewById(R.id.download_lib_list_adapter_dl_img);
 				
 				convertView.setTag(mvg);
 			}
@@ -534,21 +534,21 @@ public class DownloadLibrary extends Activity{
 				mvg = (DownloadLibViewGroup)convertView.getTag();
 			}
 			
-			mvg.textView7_1.setText((String)arraylist4_1.get(position).get("title"));
-			mvg.textView7_2.setText((String)arraylist4_1.get(position).get("description"));
-			mvg.textView7_3.setText("下载次数："+(String)arraylist4_1.get(position).get("itemCount"));
-			mvg.textView7_4.setText("创建日期："+(String)arraylist4_1.get(position).get("createDate"));
+			mvg.tv_title.setText((String)store_lib_infor.get(position).get("title"));
+			mvg.tv_description.setText((String)store_lib_infor.get(position).get("description"));
+			mvg.tv_number.setText("下载次数："+(String)store_lib_infor.get(position).get("itemCount"));
+			mvg.tv_time.setText("创建日期："+(String)store_lib_infor.get(position).get("createDate"));
 			
-			mvg.ratingBar7_1.setRating(Integer.parseInt((String)arraylist4_1.get(position).get("level")));
+			mvg.ratingBar.setRating(Integer.parseInt((String)store_lib_infor.get(position).get("level")));
 			
 			//判断列表是否在数据库中,数据在数据库中的话……
-			if(ifDownload((String)arraylist4_1.get(position).get("id"))){
-				mvg.imageButton7_1.setClickable(false);
-				mvg.textView7_5.setText("已下载");
+			if(ifDownload((String)store_lib_infor.get(position).get("id"))){
+				mvg.imageButton.setClickable(false);
+				mvg.tv_ifexist.setText("已下载");
 			}
 			else{
 				//给imagebutton添加点击事件
-				mvg.imageButton7_1.setOnClickListener(new imageBtnClickListener((String)arraylist4_1.get(position).get("id"), position+""));
+				mvg.imageButton.setOnClickListener(new imageBtnClickListener((String)store_lib_infor.get(position).get("id"), position+""));
 			}
 			return convertView;
 		}
@@ -557,14 +557,14 @@ public class DownloadLibrary extends Activity{
 	
 	//自定义视图组，为了自定义适配器
 	public class DownloadLibViewGroup{
-		public TextView textView7_1;
-		public TextView textView7_2;
-		public TextView textView7_3;
-		public TextView textView7_4;
-		public TextView textView7_5;
+		public TextView tv_title;
+		public TextView tv_description;
+		public TextView tv_number;
+		public TextView tv_time;
+		public TextView tv_ifexist;
 		
-		public RatingBar ratingBar7_1;
-		public ImageButton imageButton7_1;
+		public RatingBar ratingBar;
+		public ImageButton imageButton;
 	}
 	
 	//判断数据是否在数据库中

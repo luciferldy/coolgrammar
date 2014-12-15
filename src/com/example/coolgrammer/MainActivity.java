@@ -59,18 +59,18 @@ public class MainActivity extends Activity {
 	private Context context = null;
 	
 	// 泛型数组+哈希图
-	private ArrayList<HashMap<String, Object>> arraylist0_1 = null;
-	private ArrayList<HashMap<String, Object>> arraylist0_2 = null;
+	private ArrayList<HashMap<String, Object>> grammar_infor = null;
+	private ArrayList<HashMap<String, Object>> testlib_infor = null;
 	
 	//
-	private ListView list0_1 = null;
-	private ListView list0_2 = null;
+	private ListView lv_grammar_infor = null;
+	private ListView lv_testlib_infor = null;
 	
 	//当前界面
 	private int currentTab = 0;
 	
 	//监听手势
-	GestureDetector detector = null;
+	private GestureDetector detector = null;
 	
 	//tabhost
 	private TabHost tabhost = null;
@@ -96,6 +96,7 @@ public class MainActivity extends Activity {
 		initGestureDetector();
 	}
 	
+	// 初始化左滑菜单
 	@SuppressLint("NewApi")
 	public void initDrawerMenu(){
 		//获得Drawer
@@ -127,8 +128,8 @@ public class MainActivity extends Activity {
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu){
 		// If the nav drawer is open, hide action items related to the content view  
-//        boolean drawerOpen = drawerlt_main.isDrawerOpen(relativeLayout_main);  
-        //这里可以隐藏导航栏中的图标 
+		// boolean drawerOpen = drawerlt_main.isDrawerOpen(relativeLayout_main);  
+        // 这里可以隐藏导航栏中的图标 
         return super.onPrepareOptionsMenu(menu);
 	}
 	
@@ -169,41 +170,39 @@ public class MainActivity extends Activity {
 	//设置Grammer列表和Test列表
 	public void initListView(){
 		//获取列表
-		arraylist0_1 = getGrammar();
-		arraylist0_2 = getTestLibrary();
+		grammar_infor = getGrammar();
+		testlib_infor = getTestLibrary();
 		
 		TabOnItemClickListener tabonitemclicklistener = new TabOnItemClickListener();
 		//Grammer的列表
-		list0_1 = (ListView) findViewById(R.id.list_View0_1);
+		lv_grammar_infor = (ListView) findViewById(R.id.main_tab_one_listview);
 		//构造适配器，String[]里面的是HashMap中对应的键值名，后面的int[]是对应放入的TextView
-		SimpleAdapter listItemAdapter0_1 = new SimpleAdapter(this, arraylist0_1,
-				R.layout.list_adapter, new String[] {"title", "description"}, new int[] {R.id.textView2_1, R.id.textView2_2});
+		SimpleAdapter listItemAdapter0_1 = new SimpleAdapter(this, grammar_infor,
+				R.layout.grammar_adapter, new String[] {"title", "description"}, new int[] {R.id.grammar_adapter_title, R.id.grammar_adapter_description});
 		//将适配器置到ListView中
-		list0_1.setAdapter(listItemAdapter0_1);
+		lv_grammar_infor.setAdapter(listItemAdapter0_1);
 		// 添加ListView点击
-		list0_1.setOnItemClickListener(tabonitemclicklistener);
-		list0_1.setOnTouchListener(new View.OnTouchListener() {
+		lv_grammar_infor.setOnItemClickListener(tabonitemclicklistener);
+		lv_grammar_infor.setOnTouchListener(new View.OnTouchListener() {
 			
 			@Override
 			public boolean onTouch(View arg0, MotionEvent arg1) {
 				// TODO Auto-generated method stub
-				detector.onTouchEvent(arg1);
-				return false;
+				return detector.onTouchEvent(arg1);
 			}
 		});
 		
 		//TestLibrary的列表
-		list0_2 = (ListView) findViewById(R.id.list_View0_2);
+		lv_testlib_infor = (ListView) findViewById(R.id.main_tab_two_listview);
 		myadapter0_1 = new TestLibAdapter(this);
-		list0_2.setAdapter(myadapter0_1);
-		list0_2.setOnItemClickListener(tabonitemclicklistener);
-		list0_2.setOnTouchListener(new View.OnTouchListener() {
+		lv_testlib_infor.setAdapter(myadapter0_1);
+		lv_testlib_infor.setOnItemClickListener(tabonitemclicklistener);
+		lv_testlib_infor.setOnTouchListener(new View.OnTouchListener() {
 			
 			@Override
 			public boolean onTouch(View arg0, MotionEvent arg1) {
 				// TODO Auto-generated method stub
-				detector.onTouchEvent(arg1);
-				return false;
+				return detector.onTouchEvent(arg1);
 			}
 		});
 	}
@@ -213,8 +212,8 @@ public class MainActivity extends Activity {
 		
 		tabhost = (TabHost)findViewById(R.id.tabhost); //控件与资源ID绑定
 		tabhost.setup();
-		tabhost.addTab(tabhost.newTabSpec("Grammar").setContent(R.id.tab0_1).setIndicator("Grammar"));
-		tabhost.addTab(tabhost.newTabSpec("Test").setContent(R.id.tab0_2).setIndicator("Test"));
+		tabhost.addTab(tabhost.newTabSpec("Grammar").setContent(R.id.main_tab_one).setIndicator("Grammar"));
+		tabhost.addTab(tabhost.newTabSpec("Test").setContent(R.id.main_tab_two).setIndicator("Test"));
 		tabhost.setCurrentTab(0);
 	
 	}
@@ -428,20 +427,20 @@ public class MainActivity extends Activity {
 				long arg3) {
 			
 			//单击Grammer那一栏
-			if(arg0.getAdapter() == list0_1.getAdapter()){
+			if(arg0.getAdapter() == lv_grammar_infor.getAdapter()){
 				System.out.println("Grammer列表单击事件！");
 				//跳转到Grammer显示的界面，传递数据
 				Intent intent = new Intent();
 				intent.setClass(MainActivity.this,Grammar.class);
 				//在Bundle中存放数据，使用“键”-“值”的方式存放数据
 				Bundle bundle = new Bundle();
-				bundle.putString("id",arraylist0_1.get(arg2).get("id").toString());
+				bundle.putString("id",grammar_infor.get(arg2).get("id").toString());
 				intent.putExtras(bundle);
 				startActivity(intent);
 			}
 			
 			//单击TestLibrary那一栏
-			else if(arg0.getAdapter() == list0_2.getAdapter()){
+			else if(arg0.getAdapter() == lv_testlib_infor.getAdapter()){
 				
 				System.out.println("TestLibrary列表单击事件！");
 				//跳转到Test显示的界面，传递数据
@@ -450,9 +449,9 @@ public class MainActivity extends Activity {
 				
 				//在Bundle中存放数据，使用“键”-“值”的方式存放数据
 				Bundle bundle = new Bundle();
-				bundle.putString("libraryId",arraylist0_2.get(arg2).get("id").toString());
-				bundle.putString("title",arraylist0_2.get(arg2).get("title").toString());
-				bundle.putInt("level", Integer.parseInt(arraylist0_2.get(arg2).get("level").toString()));
+				bundle.putString("libraryId",testlib_infor.get(arg2).get("id").toString());
+				bundle.putString("title",testlib_infor.get(arg2).get("title").toString());
+				bundle.putInt("level", Integer.parseInt(testlib_infor.get(arg2).get("level").toString()));
 				intent.putExtras(bundle);
 				startActivity(intent);
 				System.out.println("Original MainActivity!");
@@ -502,10 +501,10 @@ public class MainActivity extends Activity {
 		
 		@Override
 		public void onClick(View arg0) {
-			if(arg0.getId() == R.id.imageButton3_2){
+			if(arg0.getId() == R.id.testlib_adapter_img_detail){
 				showDetailDialog();
 			}
-			else if(arg0.getId() == R.id.imageButton3_3){
+			else if(arg0.getId() == R.id.testlib_adapter_img_delete){
 				handleDelete();
 			}
 			else{
@@ -542,13 +541,13 @@ public class MainActivity extends Activity {
 			View layout = inflater.inflate(R.layout.detail_dialog, (ViewGroup)findViewById(R.id.linear_detail));
 			
 			TextView tv_title = (TextView)layout.findViewById(R.id.tv_detail_title);
-			tv_title.setText("名称："+arraylist0_2.get(lib_order).get("title"));
+			tv_title.setText("名称："+testlib_infor.get(lib_order).get("title"));
 			TextView tv_description = (TextView)layout.findViewById(R.id.tv_detail_descrip);
-			tv_description.setText("简介："+arraylist0_2.get(lib_order).get("description"));
+			tv_description.setText("简介："+testlib_infor.get(lib_order).get("description"));
 			TextView tv_count = (TextView)layout.findViewById(R.id.tv_detial_count);
-			tv_count.setTag("题数："+arraylist0_2.get(lib_order).get("itemCount"));
+			tv_count.setTag("题数："+testlib_infor.get(lib_order).get("itemCount"));
 			TextView tv_date = (TextView)layout.findViewById(R.id.tv_detail_date);
-			tv_date.setText("创建时间："+arraylist0_2.get(lib_order).get("createDate"));
+			tv_date.setText("创建时间："+testlib_infor.get(lib_order).get("createDate"));
 			
 			new AlertDialog.Builder(MainActivity.this).setTitle("详细").setView(layout).setNegativeButton("取消", null).show();
 		}
@@ -558,11 +557,11 @@ public class MainActivity extends Activity {
 				initProgressDialog();
 				myDbHelper = new MyDBHelper(getApplicationContext());
 				mdb = myDbHelper.getWritableDatabase();
-				String str_dt_lib = "delete from 'TestLibrary' where id='"+arraylist0_2.get(lib_order).get("id")+"'";
+				String str_dt_lib = "delete from 'TestLibrary' where id='"+testlib_infor.get(lib_order).get("id")+"'";
 				mdb.execSQL(str_dt_lib);
-				str_dt_lib = "delete from 'TestItem' where libraryId='"+arraylist0_2.get(lib_order).get("id")+"'";
+				str_dt_lib = "delete from 'TestItem' where libraryId='"+testlib_infor.get(lib_order).get("id")+"'";
 				mdb.execSQL(str_dt_lib);
-				arraylist0_2.remove(lib_order);
+				testlib_infor.remove(lib_order);
 				myadapter0_1.notifyDataSetChanged();
 				proDialog.dismiss();
 				mdb.close();
@@ -622,7 +621,7 @@ public class MainActivity extends Activity {
 		
 		@Override
 		public int getCount(){
-			return arraylist0_2.size();
+			return testlib_infor.size();
 		}
 		
 		@Override
@@ -642,32 +641,28 @@ public class MainActivity extends Activity {
 			
 			if(convertView == null){
 				mvg = new TestLibViewGroup();
-				convertView = mInflater.inflate(R.layout.list_adapter02, null);
+				convertView = mInflater.inflate(R.layout.test_lib_adapter, null);
 				
-				mvg.textView0_1 = (TextView)convertView.findViewById(R.id.textView3_1);
-//				mvg.textView0_2 = (TextView)convertView.findViewById(R.id.textView3_2);
-//				mvg.textView0_3 = (TextView)convertView.findViewById(R.id.textView3_3);
+				mvg.tv_lib_title = (TextView)convertView.findViewById(R.id.testlib_adapter_title);
 				
-				mvg.imageBtn0_1 = (ImageButton)convertView.findViewById(R.id.imageButton3_1);
-				mvg.imageBtn0_2 = (ImageButton)convertView.findViewById(R.id.imageButton3_2);
-				mvg.imageBtn0_3 = (ImageButton)convertView.findViewById(R.id.imageButton3_3);
+				mvg.imgbtn_expand = (ImageButton)convertView.findViewById(R.id.testlib_adapter_imgbtn_expand);
+				mvg.imgbtn_detail_infor = (ImageButton)convertView.findViewById(R.id.testlib_adapter_img_detail);
+				mvg.imgbtn_delete = (ImageButton)convertView.findViewById(R.id.testlib_adapter_img_delete);
 				
-				mvg.relativeLayout0_1 = (RelativeLayout)convertView.findViewById(R.id.relativeLayout3_3);
-				mvg.ratingBar0_1 = (RatingBar)convertView.findViewById(R.id.ratingBar3_1);
+				mvg.relativeLayout0_1 = (RelativeLayout)convertView.findViewById(R.id.testlib_adapter_hide);
+				mvg.ratingBar0_1 = (RatingBar)convertView.findViewById(R.id.testlib_adapter_ratingBar);
 				convertView.setTag(mvg);
 			}
 			else{
 				mvg = (TestLibViewGroup)convertView.getTag();
 			}
 			
-			mvg.textView0_1.setText((String)arraylist0_2.get(position).get("title"));
-//			mvg.textView0_2.setText((String)arraylist0_2.get(position).get("description"));
-//			mvg.textView0_3.setText((Integer)arraylist0_2.get(position).get("itemCount")+"");
+			mvg.tv_lib_title.setText((String)testlib_infor.get(position).get("title"));
 			
-			mvg.ratingBar0_1.setRating((Integer)arraylist0_2.get(position).get("level"));
-			mvg.imageBtn0_1.setOnClickListener(new lib_Imgbtn_ExpListener(mvg.relativeLayout0_1));
-			mvg.imageBtn0_2.setOnClickListener(new lib_Imgbtn_Listener(position));
-			mvg.imageBtn0_3.setOnClickListener(new lib_Imgbtn_Listener(position));
+			mvg.ratingBar0_1.setRating((Integer)testlib_infor.get(position).get("level"));
+			mvg.imgbtn_expand.setOnClickListener(new lib_Imgbtn_ExpListener(mvg.relativeLayout0_1));
+			mvg.imgbtn_detail_infor.setOnClickListener(new lib_Imgbtn_Listener(position));
+			mvg.imgbtn_delete.setOnClickListener(new lib_Imgbtn_Listener(position));
 			
 			return convertView;
 		}
@@ -675,13 +670,11 @@ public class MainActivity extends Activity {
 		//自定义视图组，为了自定义适配器
 		public class TestLibViewGroup{
 			
-			TextView textView0_1;
-			TextView textView0_2;
-			TextView textView0_3;
+			TextView tv_lib_title;
 			
-			ImageButton imageBtn0_1;
-			ImageButton imageBtn0_2;
-			ImageButton imageBtn0_3;
+			ImageButton imgbtn_expand;
+			ImageButton imgbtn_detail_infor;
+			ImageButton imgbtn_delete;
 			
 			RatingBar ratingBar0_1;
 			RelativeLayout relativeLayout0_1;

@@ -4,7 +4,7 @@
 	功能：下载界面的适配器
 	时间：2014年9月4日 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/relativeLayout7_1"
+    android:id="@+id/download_lib_list_adapter_rl"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:descendantFocusability="blocksDescendants"
@@ -14,21 +14,21 @@
     android:paddingRight="@dimen/adapter_horizontal_padding" >
     
     <LinearLayout
-        android:id="@+id/linearLayout7_1"
+        android:id="@+id/download_lib_list_adapter_rl_ll"
         android:minWidth="260dp"
         android:layout_width="260dp"
         android:layout_height="wrap_content"
         android:orientation="vertical">
         
         <TextView 
-            android:id="@+id/textView7_1"
+            android:id="@+id/download_lib_list_adapter_tv_title"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:textSize="22sp"
             android:gravity="center_vertical"
             android:text="名词专项（一）"/>
         <TextView 
-            android:id="@+id/textView7_2"
+            android:id="@+id/download_lib_list_adapter_tv_description"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:textSize="14sp"
@@ -36,25 +36,25 @@
             android:text="包含名词的习题以及解释"/>
        
         <TextView 
-            android:id="@+id/textView7_3"
+            android:id="@+id/download_lib_list_adapter_tv_number"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:textSize="12sp"
             android:text="题数：10"/>
         <TextView 
-            android:id="@+id/textView7_4"
+            android:id="@+id/download_lib_list_adapter_tv_time"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:textSize="12sp"
             android:text="创建时间 20140901"/>
         
         <RelativeLayout 
-            android:id="@+id/relativeLayout7_2"
+            android:id="@+id/download_lib_list_adapter_rl_ll_rl"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content">
             
             <RatingBar 
-	            android:id="@+id/ratingBar7_1"
+	            android:id="@+id/download_lib_list_adapter_ratingbar"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
 	            style="?android:attr/ratingBarStyleSmall"
@@ -65,22 +65,22 @@
     </LinearLayout>
 
     <RelativeLayout 
-        android:id="@+id/relativeLayout7_3"
+        android:id="@+id/download_lib_list_adapter_rl_rl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/linearLayout7_1"
+        android:layout_alignBottom="@id/download_lib_list_adapter_rl_ll"
         android:layout_alignParentRight="true"
-        android:layout_alignTop="@id/linearLayout7_1"
+        android:layout_alignTop="@id/download_lib_list_adapter_rl_ll"
         android:layout_toRightOf="@+id/linearLayout7_1" >
         
         <RelativeLayout 
-            android:id="@+id/relativelayout7_4"
+            android:id="@+id/download_lib_list_adapter_rl_rl_rl"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true">
             
             <ImageButton
-		        android:id="@+id/imageButton7_1"
+		        android:id="@+id/download_lib_list_adapter_dl_img"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
 		        android:layout_centerHorizontal="true"
@@ -88,8 +88,8 @@
 		        android:background="#00000000"
 		        android:src="@drawable/ic_action_download" />  
 	        <TextView 
-	            android:id="@+id/textView7_5"
-	            android:layout_below="@id/imageButton7_1"
+	            android:id="@+id/download_lib_list_adapter_dl_tv_ifexist"
+	            android:layout_below="@id/download_lib_list_adapter_dl_img"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
 	            android:paddingTop="3dp"

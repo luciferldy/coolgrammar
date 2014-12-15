@@ -3,7 +3,7 @@
 	  功能：这个是主界面（编号0）显示题库的ListView的适配器
 	  时间：2014年8月9日 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/RelativeLayout3_1"
+    android:id="@+id/testlib_adapter_rl"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:gravity="center"
@@ -12,7 +12,7 @@
     android:background="@drawable/listview_item" >
         
     <RelativeLayout 
-        android:id="@+id/linearLayout3_1"
+        android:id="@+id/testlib_adapter_show"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -23,7 +23,7 @@
         android:orientation="vertical">
         
         <TextView
-		    android:id="@+id/textView3_1"
+		    android:id="@+id/testlib_adapter_title"
 		    android:layout_width="wrap_content"
 		    android:layout_height="wrap_content"
 		    android:layout_alignParentLeft="true"
@@ -32,18 +32,18 @@
 		    android:gravity="center_vertical"
 		    android:visibility="visible" />
         <RatingBar
-            android:id="@+id/ratingBar3_1"
+            android:id="@+id/testlib_adapter_ratingBar"
             style="?android:attr/ratingBarStyleSmall"
             android:layout_marginTop="6dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_below="@id/textView3_1"
+            android:layout_below="@id/testlib_adapter_title"
             android:isIndicator="true"
             android:numStars="5"
             android:rating="0" />
         <ImageButton
-            android:id="@+id/imageButton3_1"
+            android:id="@+id/testlib_adapter_imgbtn_expand"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="#00000000"
@@ -56,17 +56,17 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/relativeLayout3_3"
+        android:id="@+id/testlib_adapter_hide"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:paddingTop="8dp"
         android:paddingBottom="8dp"        
 		android:background="#F6B249"
-        android:layout_below="@id/linearLayout3_1"
+        android:layout_below="@id/testlib_adapter_show"
         android:visibility="gone" >
 
         <ImageButton
-	        android:id="@+id/imageButton3_2"
+	        android:id="@+id/testlib_adapter_img_detail"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_marginLeft="50dp"
@@ -77,7 +77,7 @@
 	        android:src="@drawable/ic_action_about" />
 
         <ImageButton
-            android:id="@+id/imageButton3_3"
+            android:id="@+id/testlib_adapter_img_delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="50dp"
