@@ -96,9 +96,8 @@ public class DownloadLibrary extends Activity{
 		}
 	}
 	
-	//新线程，从网络获取所有lib列表
+	// 从网络获取所有lib列表
 	public class getLibThread implements Runnable{
-		
 		@Override
 		public void run(){
 			
@@ -118,18 +117,21 @@ public class DownloadLibrary extends Activity{
 				else{
 					System.out.println(str_xml_lib);
 					//获取并设置内容
-					getAndSetContent(str_xml_lib);
+					getLibandInit(str_xml_lib);
 				}
 		}
 	}
 	
-	public class getTestThread implements Runnable{
+	// 下载某个词库的题目
+	public class getQuestionsThread implements Runnable{
 		private String lib_id = null;
 		private String lib_order = null;
+		private DownloadLibViewGroup lib_infor;
 		
-		public getTestThread(String lib_id, String lib_order){
+		public getQuestionsThread(String lib_id, String lib_order, DownloadLibViewGroup lib_infor){
 			this.lib_id = lib_id;
 			this.lib_order = lib_order;
+			this.lib_infor = lib_infor;
 		}
 		
 		@Override
@@ -137,7 +139,7 @@ public class DownloadLibrary extends Activity{
 			
 			String str_xml = getXmlContent(lib_id);	
 			// 没有从网页上获取到xml字符串
-			if(str_xml.equals("-1") || !addToTestLib(Integer.parseInt(lib_order))){
+			if(str_xml.equals("-1") || !addQuestionstoLib(Integer.parseInt(lib_order))){
 				get_lib_handler.post(new Runnable(){
 					@Override
 					public void run(){
@@ -149,13 +151,13 @@ public class DownloadLibrary extends Activity{
 			}
 			else{
 				Log.d("试题的xml", str_xml);
-				handleTestXml(str_xml);
+				ParseQuestionsXmlandInstall(str_xml, lib_infor);
 			}
 		}
 	}
 	
 	//添加到TestLib中
-	public boolean addToTestLib(int lib_order){
+	public boolean addQuestionstoLib(int lib_order){
 		try{
 			MyDBHelper dbhelper_in_testlib = new MyDBHelper(getApplicationContext());
 			SQLiteDatabase sqlite_in_testlib = dbhelper_in_testlib.getWritableDatabase();
@@ -179,32 +181,20 @@ public class DownloadLibrary extends Activity{
 		
 	}
 	
-	//处理试题部分xml
-	public void handleTestXml(String str_xml){		
+	//解析试题部分xml并且将其安装
+	public void ParseQuestionsXmlandInstall(String str_xml, DownloadLibViewGroup lib_infor){		
 		try {
 			
 			InputStream input = new ByteArrayInputStream(str_xml.getBytes("utf-8"));
 			SAXParserFactory spf = SAXParserFactory.newInstance();
 			SAXParser saxParser = spf.newSAXParser(); //创建解析器
-			SAX_Item_Handler handler = new SAX_Item_Handler();
+			SAX_Questions_Handler handler = new SAX_Questions_Handler();
 			saxParser.parse(input, handler);
 			input.close();
 			
 			//成功安装
 			if(handler.isSuccess()){
-				get_lib_handler.post(new Runnable() {
-					//显示成功
-					@Override
-					public void run() {
-						// TODO Auto-generated method stub
-						Toast.makeText(getApplicationContext(), "已下载成功！", Toast.LENGTH_LONG).show();
-						
-						ImageButton ib = (ImageButton)findViewById(R.id.download_lib_list_adapter_dl_img);
-						TextView tv = (TextView)findViewById(R.id.download_lib_list_adapter_dl_tv_ifexist);
-						ib.setClickable(false);
-						tv.setText("已下载");
-					}
-				});	
+				get_lib_handler.post(new UpdateDownloadLibStatus(lib_infor));	
 				return;
 			}
 		} catch (Exception e) {
@@ -222,8 +212,28 @@ public class DownloadLibrary extends Activity{
 			
 	}
 	
-	//获得lib并设置内容
-	public void getAndSetContent(String str){
+	
+	public class UpdateDownloadLibStatus implements Runnable{
+		DownloadLibViewGroup lib_infor;
+		
+		public UpdateDownloadLibStatus(DownloadLibViewGroup lib_infor) {
+			// TODO Auto-generated constructor stub
+			this.lib_infor = lib_infor;
+		}
+		
+		@Override
+		public void run() {
+			// TODO Auto-generated method stub
+			// TODO Auto-generated method stub
+			Toast.makeText(getApplicationContext(), "已下载成功！", Toast.LENGTH_SHORT).show();
+			lib_infor.imageButton.setClickable(false);
+			lib_infor.imageButton.setImageResource(R.drawable.ic_action_accept);
+			lib_infor.tv_ifexist.setText("已下载");
+		}
+		
+	}
+	//获得题库内容并且初始化界面
+	public void getLibandInit(String str){
 		//将字符串转换为输入流，并获取内容,存到
 		try{
 			InputStream input = new ByteArrayInputStream(str.getBytes("utf-8"));
@@ -249,7 +259,7 @@ public class DownloadLibrary extends Activity{
 						download_lib_listview = (ListView)findViewById(R.id.download_lib_listview);
 						DownloadAdapter dladapter = new DownloadAdapter(getApplicationContext());
 						download_lib_listview.setAdapter(dladapter);
-						DownloadLibrary.this.setTitle("下载！");
+						DownloadLibrary.this.setTitle("下载");
 					}	
 				});
 				//让进度对话框消失
@@ -260,8 +270,6 @@ public class DownloadLibrary extends Activity{
 			e.printStackTrace();
 		}
 	}
-	
-	//返回-1的话证明出现错误，没有返回正确结果
 	
 	//通过请求URL获取数据,返回-1的话代表连接失败
 	public String getXmlContent(String arg1){
@@ -294,15 +302,13 @@ public class DownloadLibrary extends Activity{
 		
 	}
 	
-	//解析内容
-	
 	//SAX解析XML并且将结果存在arraylist里面,返回null说明xml解析失败
 	public ArrayList<HashMap<String, Object>> analyseContent(InputStream input){
 		try{
 			
 			SAXParserFactory spf = SAXParserFactory.newInstance();
 			SAXParser saxParser = spf.newSAXParser(); //创建解析器
-			SAX_Handler handler = new SAX_Handler();
+			SAX_Lib_Handler handler = new SAX_Lib_Handler();
 			saxParser.parse(input, handler);
 			input.close();
 			return handler.getItemList();
@@ -315,7 +321,7 @@ public class DownloadLibrary extends Activity{
 	}
 	
 	//SAX解析testLibrary类
-	public class SAX_Handler extends DefaultHandler{
+	public class SAX_Lib_Handler extends DefaultHandler{
 		
 		//存储数据的ArrayList
 		ArrayList<HashMap<String, Object>> arrayListItem = null; 
@@ -323,7 +329,7 @@ public class DownloadLibrary extends Activity{
 		boolean ifInLib = false;
 		
 		//构造函数
-		public SAX_Handler(){
+		public SAX_Lib_Handler(){
 			arrayListItem = new ArrayList<HashMap<String, Object>>();
 		}
 		
@@ -386,7 +392,7 @@ public class DownloadLibrary extends Activity{
 	}
 	
 	//SAX解析testItem类
-	public class SAX_Item_Handler extends DefaultHandler{
+	public class SAX_Questions_Handler extends DefaultHandler{
 		//存储数据的ArrayList
 		ContentValues cv = null;
 		boolean ifInTest = false;
@@ -398,7 +404,7 @@ public class DownloadLibrary extends Activity{
 			return isinstall;
 		}
 		//构造函数
-		public SAX_Item_Handler(){
+		public SAX_Questions_Handler(){
 			// TODO Auto-generated constructor stub
 		}
 			
@@ -544,74 +550,75 @@ public class DownloadLibrary extends Activity{
 			//判断列表是否在数据库中,数据在数据库中的话……
 			if(ifDownload((String)store_lib_infor.get(position).get("id"))){
 				mvg.imageButton.setClickable(false);
+				mvg.imageButton.setImageResource(R.drawable.ic_action_accept);
 				mvg.tv_ifexist.setText("已下载");
 			}
 			else{
 				//给imagebutton添加点击事件
-				mvg.imageButton.setOnClickListener(new imageBtnClickListener((String)store_lib_infor.get(position).get("id"), position+""));
+				mvg.imageButton.setOnClickListener(new DownloadImageBtnClickListener((String)store_lib_infor.get(position).get("id"), 
+						position+"", mvg));
 			}
 			return convertView;
 		}
 		
+		//判断数据是否在数据库中
+		public boolean ifDownload(String lib_id){
+			try{
+				MyDBHelper myDBHelper = new MyDBHelper(getApplicationContext());
+				SQLiteDatabase mdb = myDBHelper.getReadableDatabase();
+				
+				//通过查询判断是否存在这条数据
+				Cursor cursor = mdb.query("TestLibrary", new String[]{"id"}, "id="+lib_id, null, null, null, null);
+				if(cursor.getCount() == 0){
+					cursor.close();
+					mdb.close();
+					return false;
+				}
+				else{
+					cursor.close();
+					mdb.close();
+					return true;
+				}
+				
+			}
+			catch(Exception e){
+				e.printStackTrace();
+				return false;
+			}
+		}
 	}
 	
 	//自定义视图组，为了自定义适配器
 	public class DownloadLibViewGroup{
-		public TextView tv_title;
-		public TextView tv_description;
-		public TextView tv_number;
-		public TextView tv_time;
-		public TextView tv_ifexist;
-		
-		public RatingBar ratingBar;
-		public ImageButton imageButton;
+		private TextView tv_title;
+		private TextView tv_description;
+		private TextView tv_number;
+		private TextView tv_time;
+		private TextView tv_ifexist;
+		private RatingBar ratingBar;
+		private ImageButton imageButton;
 	}
-	
-	//判断数据是否在数据库中
-	public boolean ifDownload(String lib_id){
-		try{
-			MyDBHelper myDBHelper = new MyDBHelper(getApplicationContext());
-			SQLiteDatabase mdb = myDBHelper.getReadableDatabase();
-			
-			//通过查询判断是否存在这条数据
-			Cursor cursor = mdb.query("TestLibrary", new String[]{"id"}, "id="+lib_id, null, null, null, null);
-			if(cursor.getCount() == 0){
-				cursor.close();
-				mdb.close();
-				return false;
-			}
-			else{
-				cursor.close();
-				mdb.close();
-				return true;
-			}
-			
-		}
-		catch(Exception e){
-			e.printStackTrace();
-			return false;
-		}
-	}
-	
+
 	//下载按钮的监听器
-	public class imageBtnClickListener implements View.OnClickListener{
+	public class DownloadImageBtnClickListener implements View.OnClickListener{
 
 		//题库的id
 		private String lib_id;
 		private String lib_order;
+		private DownloadLibViewGroup lib_infor;
 		
-		public imageBtnClickListener(String lib_id, String lib_order){
+		public DownloadImageBtnClickListener(String lib_id, String lib_order, DownloadLibViewGroup lib_infor){
 			this.lib_id = lib_id;
 			this.lib_order = lib_order;
+			this.lib_infor = lib_infor;
 		}
 		@Override
 		public void onClick(View arg0) {
 			// TODO Auto-generated method stub
-			new Thread(new getTestThread(lib_id, lib_order)).start();
+			new Thread(new getQuestionsThread(lib_id, lib_order, lib_infor)).start();
 			
 		}
 		
 	}
-	//下载并存到数据库中
-	
+
 }
