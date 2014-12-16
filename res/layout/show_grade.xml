@@ -4,13 +4,13 @@
 	功能：这个程序是和error_analyse一起的，本来想写在一起，然后通过隐藏来实现，但是后来感觉还是有点不好
 	时间：2014年9月18日 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/RelativeLayout5_5"
+    android:id="@+id/show_grade_container"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" > 
     
     <RelativeLayout
-        android:id="@+id/rl_contain_back"
+        android:id="@+id/show_grade_contain_back"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
@@ -26,7 +26,7 @@
     </RelativeLayout>
 
     <Button 
-        android:id="@+id/button5_6"
+        android:id="@+id/show_grade_entertoanalyse"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:minHeight="60dp"
@@ -34,22 +34,22 @@
         android:text="@string/button5_6"/>
 
     <LinearLayout
-        android:id="@+id/linearLayout5_7"
+        android:id="@+id/show_grade_contain_grade"
         android:layout_height="fill_parent"
         android:layout_width="fill_parent"
         android:minHeight="120dp"
-        android:layout_below="@id/rl_contain_back"
-        android:layout_above="@id/button5_6"
+        android:layout_below="@id/show_grade_contain_back"
+        android:layout_above="@id/show_grade_entertoanalyse"
         android:orientation="vertical">
         <TextView
-	        android:id="@+id/textView5_4"
+	        android:id="@+id/show_grade_correctrate"
 	        android:layout_width="fill_parent"
 	        android:layout_height="0dp"
 	        android:layout_weight="1"
 	        android:minHeight="120dp"
 	        android:gravity="center"
 	        android:background="#4FBAB4"
-	        android:text="正确率\n10/10"
+	        android:text="正确率\n 10/10"
 	        android:textSize="25sp" />
         <RelativeLayout
             android:layout_width="fill_parent"
@@ -57,14 +57,14 @@
             android:layout_weight="0.5">
 
             <TextView
-                android:id="@+id/textView5_5"
+                android:id="@+id/show_grade_level"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="5dp"
-                android:gravity="bottom|center_horizontal"
-                android:text="@string/textView5_5"
+                android:gravity="center"
+                android:text="难度等级"
                 android:textSize="23sp" />
 
         </RelativeLayout>
@@ -73,7 +73,7 @@
             android:layout_height="0dp"
             android:layout_weight="0.5">
         	<RatingBar
-             android:id="@+id/ratingBar5_1"
+             android:id="@+id/show_grade_rating"
              style="?android:attr/ratingBarStyleSmall"
              android:layout_width="wrap_content"
              android:layout_height="50dp"
@@ -83,7 +83,7 @@
              android:numStars="5" />   
         </RelativeLayout>
         <TextView
-		     android:id="@+id/textView5_6"
+		     android:id="@+id/show_grade_time"
 		     android:layout_width="fill_parent"
 		     android:layout_height="0dp"
 		     android:layout_weight="1"
@@ -91,11 +91,7 @@
 		     android:background="#F6B249"
 		     android:paddingTop="5dp"
 		     android:gravity="center"
-		     android:text="时间\n00：00：06"
 		     android:textSize="23sp" />
     </LinearLayout>
-	          
-    
-	    
 
 </RelativeLayout>

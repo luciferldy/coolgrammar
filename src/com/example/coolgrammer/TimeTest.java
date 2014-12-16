@@ -33,15 +33,15 @@ import android.widget.Toast;
 public class TimeTest extends Activity{
 	
 	//各个视图
-	private TextView textView1 = null;
-	private RadioButton radiobtn1 = null;
-	private RadioButton radiobtn2 = null;
-	private RadioButton radiobtn3 = null;
-	private RadioButton radiobtn4 = null;
-	private ImageButton button4_3 = null;
-	private ImageButton button4_4 = null;
-	private ImageButton button4_5 = null;
-	private RadioGroup radiogrp2_1 = null;
+	private TextView time_test_title;
+	private RadioButton time_test_answer_first = null;
+	private RadioButton time_test_answer_second = null;
+	private RadioButton time_test_answer_third = null;
+	private RadioButton time_test_answer_fourth = null;
+	private ImageButton time_test_prepage = null;
+	private ImageButton time_test_nextpage = null;
+	private ImageButton time_test_exit = null;
+	private RadioGroup time_test_answersgroup = null;
 	private ProgressBar progressBarInTT = null;
 	
 	//各个变量
@@ -60,14 +60,14 @@ public class TimeTest extends Activity{
 	private int item_number = 0;
 	
 	//时间计时
-	private int hour_2 = 0;
-	private int minute_2 = 0;
-	private int second_2 = 0;
+	private int time_test_hour = 0;
+	private int time_test_minute = 0;
+	private int time_test_second = 0;
 	
 	//泛型数组+哈希图。存储关于题号，，题目以及你的答案
-	private ArrayList<HashMap<String, Object>> list2_1 = null;
+	private ArrayList<HashMap<String, Object>> test_lib = null;
 	//存储错题
-	private ArrayList<HashMap<String, Object>> list2_2 = null;
+	private ArrayList<HashMap<String, Object>> error_lib = null;
 	
 	//数据库需要用到的一些东西
 	private SQLiteDatabase mdb_2 = null;
@@ -79,8 +79,8 @@ public class TimeTest extends Activity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.time_test);
 		
-		list2_1 = new ArrayList<HashMap<String, Object>>();
-		list2_2 = new ArrayList<HashMap<String, Object>>();
+		test_lib = new ArrayList<HashMap<String, Object>>();
+		error_lib = new ArrayList<HashMap<String, Object>>();
 		
 		try{
 			//获得从 Buddle 处传过来的数据，以键名来获得值
@@ -101,16 +101,16 @@ public class TimeTest extends Activity{
 		getViewId();
 		
 		//显示语法的内容
-		getTestContent(list2_1.get(item_count).get("id").toString());
+		getTestContent(test_lib.get(item_count).get("id").toString());
 		setViewContent();
 		
 		
 		//向前与向后翻页
-		button4_3.setOnClickListener(new onTurnPageListener(0, this));
-		button4_4.setOnClickListener(new onTurnPageListener(1, this));
+		time_test_prepage.setOnClickListener(new onTurnPageListener(0, this));
+		time_test_nextpage.setOnClickListener(new onTurnPageListener(1, this));
 		
 		//返回键
-		button4_5.setOnClickListener(new View.OnClickListener() {
+		time_test_exit.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
 			public void onClick(View arg0) {
@@ -168,9 +168,9 @@ public class TimeTest extends Activity{
 	public void getSystemTime(){
 		Time t = new Time();
 		t.setToNow();
-		hour_2 = t.hour;
-		minute_2 = t.minute;
-		second_2 = t.second;
+		time_test_hour = t.hour;
+		time_test_minute = t.minute;
+		time_test_second = t.second;
 	}
 	
 	//获取所有题目的id，并且存在泛型数组中
@@ -192,7 +192,7 @@ public class TimeTest extends Activity{
 				hashmap2_1 = new HashMap<String, Object>();
 				hashmap2_1.put("id", cursor_2.getString(cursor_2.getColumnIndex("id")));
 				hashmap2_1.put("answer", cursor_2.getString(cursor_2.getColumnIndex("answer")));
-				list2_1.add(hashmap2_1);
+				test_lib.add(hashmap2_1);
 			}
 			//从指针处提取数据
 			
@@ -232,15 +232,15 @@ public class TimeTest extends Activity{
 				else{
 					//如果下一题是最后一题，那么下一题改为  提交
 					if(item_count == (item_number-2)){
-						button4_4.setImageResource(drawable.ic_action_accept);
-						button4_4.getBackground().setAlpha(0);
+						time_test_nextpage.setImageResource(drawable.ic_action_accept);
+						time_test_nextpage.getBackground().setAlpha(0);
 					}
 					
 					//将错误选项加入ArrayList+HashMap中
-					addWrongItem(context, radiogrp2_1.getCheckedRadioButtonId());
+					addWrongItem(context, time_test_answersgroup.getCheckedRadioButtonId());
 					
 					//获取内容，设置内容
-					getTestContent(list2_1.get(++item_count).get("id").toString());
+					getTestContent(test_lib.get(++item_count).get("id").toString());
 					setViewContent();
 				}	
 				
@@ -252,10 +252,10 @@ public class TimeTest extends Activity{
 				}
 				else{
 					if(item_count == (item_number-1)){
-						button4_4.setImageResource(drawable.ic_action_forward);
-						button4_4.getBackground().setAlpha(0);
+						time_test_nextpage.setImageResource(drawable.ic_action_forward);
+						time_test_nextpage.getBackground().setAlpha(0);
 					}
-					getTestContent(list2_1.get(--item_count).get("id").toString());
+					getTestContent(test_lib.get(--item_count).get("id").toString());
 					setViewContent();
 				}
 				
@@ -266,30 +266,30 @@ public class TimeTest extends Activity{
 		public void LastItemJump(){
 			
 			//将错误选项加入ArrayList+HashMap中
-			addWrongItem(context, radiogrp2_1.getCheckedRadioButtonId());
+			addWrongItem(context, time_test_answersgroup.getCheckedRadioButtonId());
 			
 			//计时
 			Time t = new Time();
 			t.setToNow();
-			hour_2 = t.hour-hour_2;
+			time_test_hour = t.hour-time_test_hour;
 			// 判断是否出现了秒针比较小的情况
-			if (t.second<second_2) {
-				second_2 = t.second-second_2+60;
-				minute_2 = t.minute-minute_2-1;
+			if (t.second<time_test_second) {
+				time_test_second = t.second-time_test_second+60;
+				time_test_minute = t.minute-time_test_minute-1;
 			}
 			else {
-				minute_2 = t.minute-minute_2;
-				second_2 = t.second-second_2;
+				time_test_minute = t.minute-time_test_minute;
+				time_test_second = t.second-time_test_second;
 			}
 			
 			//传递数据，实现跳转
 			Intent intent2_1 = new Intent(TimeTest.this, ErrorAnalyse.class);
 			intent2_1.putExtra("test_number", item_number);
 			intent2_1.putExtra("test_level", test_level);
-			intent2_1.putExtra("item_list",list2_2);
-			intent2_1.putExtra("hour", hour_2);
-			intent2_1.putExtra("minute", minute_2);
-			intent2_1.putExtra("second", second_2);
+			intent2_1.putExtra("item_list",error_lib);
+			intent2_1.putExtra("hour", time_test_hour);
+			intent2_1.putExtra("minute", time_test_minute);
+			intent2_1.putExtra("second", time_test_second);
 			
 			startActivity(intent2_1);
 		}
@@ -297,56 +297,56 @@ public class TimeTest extends Activity{
 		//获得被选择的项目，并且将其放入HashMap中
 		public void addWrongItem(Context context, int ischecked){
 			HashMap<String, Object> hashmap2_2 = null;
-			//将错误的选项存入HashMap中,并存入list2_2中方便数据传递
+			//将错误的选项存入HashMap中,并存入error_lib中方便数据传递
 			switch(ischecked){
-			case R.id.radiobutton4_1:
-				if(list2_1.get(item_count).get("answer").toString().equals("A")){
+			case R.id.time_test_answer_first:
+				if(test_lib.get(item_count).get("answer").toString().equals("A")){
 					break;
 				}
 				else {
 					hashmap2_2 = new HashMap<String, Object>();
 					hashmap2_2.put("item_order", item_count+1);
-					hashmap2_2.put("item_id", list2_1.get(item_count).get("id").toString());
+					hashmap2_2.put("item_id", test_lib.get(item_count).get("id").toString());
 					hashmap2_2.put("item_reply", "A");
-					list2_2.add(hashmap2_2);
+					error_lib.add(hashmap2_2);
 					System.out.println("加入错题库！");
 				}
 				break;
-			case R.id.radiobutton4_2:
-				if(list2_1.get(item_count).get("answer").toString().equals("B")){
+			case R.id.time_test_answer_second:
+				if(test_lib.get(item_count).get("answer").toString().equals("B")){
 					break;
 				}
 				else {
 					hashmap2_2 = new HashMap<String, Object>();
 					hashmap2_2.put("item_order", item_count+1);
-					hashmap2_2.put("item_id", list2_1.get(item_count).get("id").toString());
+					hashmap2_2.put("item_id", test_lib.get(item_count).get("id").toString());
 					hashmap2_2.put("item_reply", "B");
-					list2_2.add(hashmap2_2);
+					error_lib.add(hashmap2_2);
 					System.out.println("加入错题库！");
 				}
 				break;
-			case R.id.radiobutton4_3:
-				if(list2_1.get(item_count).get("answer").toString().equals("C")){
+			case R.id.time_test_answer_third:
+				if(test_lib.get(item_count).get("answer").toString().equals("C")){
 					break;
 				}
 				else {
 					hashmap2_2 = new HashMap<String, Object>();
 					hashmap2_2.put("item_order", item_count+1);
-					hashmap2_2.put("item_id", list2_1.get(item_count).get("id").toString());
+					hashmap2_2.put("item_id", test_lib.get(item_count).get("id").toString());
 					hashmap2_2.put("item_reply", "C");
-					list2_2.add(hashmap2_2);
+					error_lib.add(hashmap2_2);
 					System.out.println("加入错题库！");
 				}
 				break;
-			case R.id.radiobutton4_4:
-				if(list2_1.get(item_count).get("answer").toString().equals("D")){
+			case R.id.time_test_answer_fourth:
+				if(test_lib.get(item_count).get("answer").toString().equals("D")){
 				}
 				else {
 					hashmap2_2 = new HashMap<String, Object>();
 					hashmap2_2.put("item_order", item_count+1);
-					hashmap2_2.put("item_id", list2_1.get(item_count).get("id").toString());
+					hashmap2_2.put("item_id", test_lib.get(item_count).get("id").toString());
 					hashmap2_2.put("item_reply", "D");
-					list2_2.add(hashmap2_2);
+					error_lib.add(hashmap2_2);
 					System.out.println("加入错题库！");
 				}
 				break;
@@ -354,9 +354,9 @@ public class TimeTest extends Activity{
 				
 				hashmap2_2 = new HashMap<String, Object>();
 				hashmap2_2.put("item_order", item_count+1);
-				hashmap2_2.put("item_id", list2_1.get(item_count).get("id").toString());
+				hashmap2_2.put("item_id", test_lib.get(item_count).get("id").toString());
 				hashmap2_2.put("item_reply", "N");
-				list2_2.add(hashmap2_2);
+				error_lib.add(hashmap2_2);
 				Toast.makeText(context, "No choice is Wrong!", Toast.LENGTH_SHORT).show();
 				break;
 			}
@@ -400,23 +400,23 @@ public class TimeTest extends Activity{
 	//获取各个视图的ID
 	public void getViewId(){
 		
-		textView1 = (TextView)findViewById(R.id.textView4_1);
-		radiogrp2_1 = (RadioGroup)findViewById(R.id.radiogroup4_1);
+		time_test_title = (TextView)findViewById(R.id.time_test_title);
+		time_test_answersgroup = (RadioGroup)findViewById(R.id.time_test_answersgroup);
 		progressBarInTT = (ProgressBar)findViewById(R.id.progressBarInTT);
 		
-		radiobtn1 = (RadioButton)findViewById(R.id.radiobutton4_1);
-		radiobtn2 = (RadioButton)findViewById(R.id.radiobutton4_2);
-		radiobtn3 = (RadioButton)findViewById(R.id.radiobutton4_3);
-		radiobtn4 = (RadioButton)findViewById(R.id.radiobutton4_4);
+		time_test_answer_first = (RadioButton)findViewById(R.id.time_test_answer_first);
+		time_test_answer_second = (RadioButton)findViewById(R.id.time_test_answer_second);
+		time_test_answer_third = (RadioButton)findViewById(R.id.time_test_answer_third);
+		time_test_answer_fourth = (RadioButton)findViewById(R.id.time_test_answer_fourth);
 		
-		button4_3 = (ImageButton)findViewById(R.id.button4_3);
-		button4_4 = (ImageButton)findViewById(R.id.button4_4);
-		button4_5 = (ImageButton)findViewById(R.id.button4_5);
+		time_test_prepage = (ImageButton)findViewById(R.id.time_test_prepage);
+		time_test_nextpage = (ImageButton)findViewById(R.id.time_test_nextpage);
+		time_test_exit = (ImageButton)findViewById(R.id.time_test_exit);
 		
 		//只有一道题，将其改为提交
 		if(item_number==1){
-			button4_4.setImageResource(drawable.ic_action_accept);
-			button4_4.getBackground().setAlpha(0);
+			time_test_nextpage.setImageResource(drawable.ic_action_accept);
+			time_test_nextpage.getBackground().setAlpha(0);
 		}
 	}
 	
@@ -424,14 +424,14 @@ public class TimeTest extends Activity{
 	public void setViewContent(){
 		
 		progressBarInTT.setProgress(progress);
-		textView1.setText("问题"+"："+(item_count+1)+"."+question);
+		time_test_title.setText("问题"+"："+(item_count+1)+"."+question);
 		
-		radiobtn1.setText(a);
-		radiobtn2.setText(b);
-		radiobtn3.setText(c);
-		radiobtn4.setText(d);
+		time_test_answer_first.setText(a);
+		time_test_answer_second.setText(b);
+		time_test_answer_third.setText(c);
+		time_test_answer_fourth.setText(d);
 		
-		radiogrp2_1.clearCheck();
+		time_test_answersgroup.clearCheck();
 		
 	}
 }

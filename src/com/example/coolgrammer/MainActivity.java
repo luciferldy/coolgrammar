@@ -563,8 +563,8 @@ public class MainActivity extends Activity {
 				mdb.execSQL(str_dt_lib);
 				testlib_infor.remove(lib_order);
 				myadapter0_1.notifyDataSetChanged();
-				proDialog.dismiss();
 				mdb.close();
+				proDialog.dismiss();
 				return true;
 			} catch (Exception e) {
 				// TODO: handle exception
@@ -576,7 +576,7 @@ public class MainActivity extends Activity {
 		}
 		
 		public void initProgressDialog(){
-			ProgressDialog proDialog = new ProgressDialog(MainActivity.this);
+			proDialog = new ProgressDialog(MainActivity.this);
 			proDialog.setTitle("提示");
 			proDialog.setMessage("正在删除！");
 			proDialog.setCancelable(false);

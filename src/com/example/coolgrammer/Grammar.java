@@ -51,28 +51,28 @@ public class Grammar extends Activity{
 	//显示语法的内容
 	public void showGrammarContent(String id){
 		
-		SQLiteDatabase mdb_1 = null;
-		String title_1 = null;
-		String content_1 = null;
+		SQLiteDatabase mdb = null;
+		String title = null;
+		String content = null;
 		
 		//从数据库中获取内容
 		try{
 			Context context_1 = (Context)this;
 			MyDBHelper myDbHelper_1 = new MyDBHelper(context_1);
-			mdb_1 =myDbHelper_1.getReadableDatabase();	
-			Cursor cursor_1 = mdb_1.query("Grammar", new String[] {"title", "content"}, "id="+id, null, null, null, null);
+			mdb =myDbHelper_1.getReadableDatabase();	
+			Cursor cursor_1 = mdb.query("Grammar", new String[] {"title", "content"}, "id="+id, null, null, null, null);
 			cursor_1.moveToNext();
-			title_1 = cursor_1.getString(cursor_1.getColumnIndex("title"));
-			content_1 = cursor_1.getString(cursor_1.getColumnIndex("content"));
+			title = cursor_1.getString(cursor_1.getColumnIndex("title"));
+			content = cursor_1.getString(cursor_1.getColumnIndex("content"));
 		}
 		catch (Exception e){
 			System.out.println(e.toString());
 			Toast.makeText(this, "something wrong in grammar content", Toast.LENGTH_SHORT).show();
 		}
-		mdb_1.close();
+		mdb.close();
 		
-		TextView textView1 = (TextView)findViewById(R.id.textView1_1);
-		textView1.setText(content_1);
-		setTitle(title_1);
+		TextView textView1 = (TextView)findViewById(R.id.grammar_content);
+		textView1.setText(content);
+		setTitle(title);
 	}
 }

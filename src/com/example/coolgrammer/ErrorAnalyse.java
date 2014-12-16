@@ -29,26 +29,26 @@ import android.widget.Toast;
 public class ErrorAnalyse extends Activity{
 	
 	//各个控件，写的有点麻烦了
-	private TextView textView1 = null;//题目
-	private TextView textView2 = null;//答案
-	private TextView textView3 = null;//解析
+	private TextView error_analyse_content = null;//题目
+	private TextView error_analyse_rightanswer = null;//答案
+	private TextView error_analyse_answerresolve = null;//解析
 	
-	private TextView textView4 = null; //正确率
-	private TextView textView6 = null; //时间
+	private TextView show_grade_correctrate = null; //正确率
+	private TextView show_grade_time = null; //时间
 	
-	private RadioButton radiobtn1 = null;
-	private RadioButton radiobtn2 = null;
-	private RadioButton radiobtn3 = null;
-	private RadioButton radiobtn4 = null;
+	private RadioButton error_analyse_answer_first = null;
+	private RadioButton error_analyse_answer_second = null;
+	private RadioButton error_analyse_answer_third = null;
+	private RadioButton error_analyse_answer_fourth = null;
 	
 	
-	private ImageButton button5_3 = null;
-	private ImageButton button5_4 = null;
-	private ImageButton button5_5 = null;
+	private ImageButton error_analyse_prepage = null;
+	private ImageButton error_analyse_nextpage = null;
+	private ImageButton error_analyse_exit = null;
 	private ImageButton btn_backto_main = null;
-	private Button button5_6 = null;
+	private Button show_grade_entertoanalyse = null;
 	
-	private RatingBar ratingBar5_1 = null;
+	private RatingBar show_grade_rating = null;
 	//各个变量
 	private String question = null;
 	private String a = null;
@@ -65,16 +65,16 @@ public class ErrorAnalyse extends Activity{
 	private int test_level = 0;
 	
 	//计时
-	private int hour_3 = 0;
-	private int minute_3 = 0;
-	private int second_3 = 0;
+	private int error_anaylse_hour = 0;
+	private int error_analyse_minute = 0;
+	private int error_analyse_second = 0;
 	
-	ArrayList<HashMap<String, Object>> list3_1 = null;
+	ArrayList<HashMap<String, Object>> error_lib = null;
 	
 	//数据库需要用到的一些东西
-	SQLiteDatabase mdb_3 = null;
-	Context context_3 = null;
-	MyDBHelper myDbHelper_3  = null;
+	private SQLiteDatabase mdb = null;
+	private Context context = null;
+	private MyDBHelper myDbHelper  = null;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState){
@@ -88,7 +88,7 @@ public class ErrorAnalyse extends Activity{
 		showAchievement();
 		
 		// 进入解析按钮的控制
-		button5_6.setOnClickListener(new View.OnClickListener() {
+		show_grade_entertoanalyse.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
 			public void onClick(View arg0) {
@@ -111,35 +111,35 @@ public class ErrorAnalyse extends Activity{
 		
 		try{
 			
-			list3_1 = new ArrayList<HashMap<String, Object>>();
+			error_lib = new ArrayList<HashMap<String, Object>>();
 			//从Intent获得数据
-			list3_1 = (ArrayList<HashMap<String, Object>>) this.getIntent().getSerializableExtra("item_list");
+			error_lib = (ArrayList<HashMap<String, Object>>) this.getIntent().getSerializableExtra("item_list");
 			test_number = this.getIntent().getIntExtra("test_number", 0);
 			test_level = this.getIntent().getIntExtra("test_level",3);
-			hour_3 = this.getIntent().getIntExtra("hour",0);
-			minute_3 = this.getIntent().getIntExtra("minute",0);
-			second_3 = this.getIntent().getIntExtra("second",0);
+			error_anaylse_hour = this.getIntent().getIntExtra("hour",0);
+			error_analyse_minute = this.getIntent().getIntExtra("minute",0);
+			error_analyse_second = this.getIntent().getIntExtra("second",0);
 		}
 		catch(Exception e){
 			e.printStackTrace();
 		}
 		
-		item_number = list3_1.size();
+		item_number = error_lib.size();
 	}
 	
 	//切换视图 的 函数
 	public void changeView(){
 		
-		getTestContent(list3_1.get(item_count).get("item_id").toString());
+		getTestContent(error_lib.get(item_count).get("item_id").toString());
 		setContentView(R.layout.error_analyse);
 		getViewIdInErrorA();
 		setViewContentInErrorA();
 		//向前与向后翻页
-		button5_3.setOnClickListener(new onTurnPageListener(0, getApplicationContext()));
-		button5_4.setOnClickListener(new onTurnPageListener(1, getApplicationContext()));
+		error_analyse_prepage.setOnClickListener(new onTurnPageListener(0, getApplicationContext()));
+		error_analyse_nextpage.setOnClickListener(new onTurnPageListener(1, getApplicationContext()));
 		
 		//返回键
-		button5_5.setOnClickListener(new View.OnClickListener() {
+		error_analyse_exit.setOnClickListener(new View.OnClickListener() {
 			
 			@SuppressLint("InlinedApi")
 			@Override
@@ -175,9 +175,9 @@ public class ErrorAnalyse extends Activity{
 	//显示成就界面的内容
 	public void showAchievement(){
 		
-		textView4.setText("错误率\n"+list3_1.size()+"/"+test_number);
-		ratingBar5_1.setRating(test_level);
-		textView6.setText("时间\n"+hour_3+":"+minute_3+":"+second_3);
+		show_grade_correctrate.setText("错误率\n"+error_lib.size()+"/"+test_number);
+		show_grade_rating.setRating(test_level);
+		show_grade_time.setText("时间\n"+error_anaylse_hour+":"+error_analyse_minute+":"+error_analyse_second);
 		btn_backto_main.setOnClickListener(new View.OnClickListener() {
 			
 			@SuppressLint("InlinedApi")
@@ -188,10 +188,10 @@ public class ErrorAnalyse extends Activity{
 			}
 		});
 		if(item_number == 0)
-			button5_6.setText("退回主界面");
+			show_grade_entertoanalyse.setText("退回主界面");
 		if(item_number == 1){
-			button5_4.setImageResource(drawable.ic_action_accept);
-			button5_4.getBackground().setAlpha(0);
+			error_analyse_nextpage.setImageResource(drawable.ic_action_accept);
+			error_analyse_nextpage.getBackground().setAlpha(0);
 		}
 			
 	}
@@ -217,13 +217,13 @@ public class ErrorAnalyse extends Activity{
 					backToMain();
 				}	
 				else{
-					//如果下一题是最后一题，那么下一题改为  提交
+					//如果下一题是最后一题，那么下一题改为一个对号的样子
 					if(item_count == (item_number-2)){
-						button5_4.setImageResource(drawable.ic_action_accept);
-						button5_4.getBackground().setAlpha(0);
+						error_analyse_nextpage.setImageResource(drawable.ic_action_accept);
+						error_analyse_nextpage.getBackground().setAlpha(0);
 					}
 					//获取内容，设置内容
-					getTestContent(list3_1.get(++item_count).get("item_id").toString());
+					getTestContent(error_lib.get(++item_count).get("item_id").toString());
 					setViewContentInErrorA();
 				}	
 				
@@ -234,10 +234,10 @@ public class ErrorAnalyse extends Activity{
 					Toast.makeText(context, "已经是第一题了", Toast.LENGTH_SHORT).show();
 				else{
 					if(item_count == (item_number-1)){
-						button5_4.setImageResource(drawable.ic_action_forward);
-						button5_4.getBackground().setAlpha(0);
+						error_analyse_nextpage.setImageResource(drawable.ic_action_forward);
+						error_analyse_nextpage.getBackground().setAlpha(0);
 					}
-					getTestContent(list3_1.get(--item_count).get("item_id").toString());
+					getTestContent(error_lib.get(--item_count).get("item_id").toString());
 					setViewContentInErrorA();
 				}
 				
@@ -251,10 +251,10 @@ public class ErrorAnalyse extends Activity{
 		
 		//从数据库中获取内容
 		try{
-			context_3 = (Context)this;
-			myDbHelper_3 = new MyDBHelper(context_3);
-			mdb_3 =myDbHelper_3.getReadableDatabase();	
-			Cursor cursor_2 = mdb_3.query("TestItem", new String[] {"question", "a", "b", 
+			context = (Context)this;
+			myDbHelper = new MyDBHelper(context);
+			mdb =myDbHelper.getReadableDatabase();	
+			Cursor cursor_2 = mdb.query("TestItem", new String[] {"question", "a", "b", 
 					"c", "d", "answer", "why"}, "id="+id, null, null, null, null);
 			
 			//定位到题中
@@ -274,59 +274,56 @@ public class ErrorAnalyse extends Activity{
 			Toast.makeText(this, "something wrong in test content", Toast.LENGTH_SHORT).show();
 		}
 		finally{
-			mdb_3.close();
-		}
-		
-		
-		
+			mdb.close();
+		}	
 		
 	}
 	
 	//获取错题分析部分各个视图的ID
 	public void getViewIdInErrorA(){
 		
-		textView1 = (TextView)findViewById(R.id.textView5_1);
-		textView2 = (TextView)findViewById(R.id.textView5_2);
-		textView3 = (TextView)findViewById(R.id.textView5_3);
+		error_analyse_content = (TextView)findViewById(R.id.error_analyse_content);
+		error_analyse_rightanswer = (TextView)findViewById(R.id.error_analyse_rightanswer);
+		error_analyse_answerresolve = (TextView)findViewById(R.id.error_analyse_answerresolve);
 		
 		
-		radiobtn1 = (RadioButton)findViewById(R.id.radiobutton5_1);
-		radiobtn2 = (RadioButton)findViewById(R.id.radiobutton5_2);
-		radiobtn3 = (RadioButton)findViewById(R.id.radiobutton5_3);
-		radiobtn4 = (RadioButton)findViewById(R.id.radiobutton5_4);
+		error_analyse_answer_first = (RadioButton)findViewById(R.id.error_analyse_answer_first);
+		error_analyse_answer_second = (RadioButton)findViewById(R.id.error_analyse_answer_second);
+		error_analyse_answer_third = (RadioButton)findViewById(R.id.error_analyse_answer_third);
+		error_analyse_answer_fourth = (RadioButton)findViewById(R.id.error_analyse_answer_fourth);
 		
-		button5_3 = (ImageButton)findViewById(R.id.button5_3);
-		button5_4 = (ImageButton)findViewById(R.id.button5_4);
-		button5_5 = (ImageButton)findViewById(R.id.button5_5);
+		error_analyse_prepage = (ImageButton)findViewById(R.id.error_analyse_prepage);
+		error_analyse_nextpage = (ImageButton)findViewById(R.id.error_analyse_nextpage);
+		error_analyse_exit = (ImageButton)findViewById(R.id.error_analyse_exit);
 		
 	}
 	
 	//获得显示成绩处的视图的id
 	public void getViewIdInShowG(){
 		
-		textView4 = (TextView)findViewById(R.id.textView5_4);
-		textView6 = (TextView)findViewById(R.id.textView5_6);
-		button5_6 = (Button)findViewById(R.id.button5_6);
+		show_grade_correctrate = (TextView)findViewById(R.id.show_grade_correctrate);
+		show_grade_time = (TextView)findViewById(R.id.show_grade_time);
+		show_grade_entertoanalyse = (Button)findViewById(R.id.show_grade_entertoanalyse);
 		btn_backto_main = (ImageButton)findViewById(R.id.imgbtn_back_insg);
-		ratingBar5_1 = (RatingBar)findViewById(R.id.ratingBar5_1);
+		show_grade_rating = (RatingBar)findViewById(R.id.show_grade_rating);
 	}
 	
 	//设置各个视图显示的内容
 	public void setViewContentInErrorA(){
 		
-		textView1.setText("问题："+list3_1.get(item_count).get("item_order").toString()+"."+question);
-		textView2.setText("你的答案："+list3_1.get(item_count).get("item_reply").toString()+"	  "+"正确答案："+"："+answer);
-		textView3.setText("解析："+why);
+		error_analyse_content.setText("问题："+error_lib.get(item_count).get("item_order").toString()+"."+question);
+		error_analyse_rightanswer.setText("你的答案："+error_lib.get(item_count).get("item_reply").toString()+"	  "+"正确答案："+"："+answer);
+		error_analyse_answerresolve.setText("解析："+why);
 		
-		radiobtn1.setText(a);
-		radiobtn2.setText(b);
-		radiobtn3.setText(c);
-		radiobtn4.setText(d);
+		error_analyse_answer_first.setText(a);
+		error_analyse_answer_second.setText(b);
+		error_analyse_answer_third.setText(c);
+		error_analyse_answer_fourth.setText(d);
 		
-		radiobtn1.setChecked(false);
-		radiobtn2.setChecked(false);
-		radiobtn3.setChecked(false);
-		radiobtn4.setChecked(false);
+		error_analyse_answer_first.setChecked(false);
+		error_analyse_answer_second.setChecked(false);
+		error_analyse_answer_third.setChecked(false);
+		error_analyse_answer_fourth.setChecked(false);
 		
 	}
 }

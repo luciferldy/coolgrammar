@@ -202,7 +202,7 @@ public class DownloadLibrary extends Activity{
 						ImageButton ib = (ImageButton)findViewById(R.id.download_lib_list_adapter_dl_img);
 						TextView tv = (TextView)findViewById(R.id.download_lib_list_adapter_dl_tv_ifexist);
 						ib.setClickable(false);
-						tv.setText("已下载！");
+						tv.setText("已下载");
 					}
 				});	
 				return;
