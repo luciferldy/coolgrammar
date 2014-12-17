@@ -12,11 +12,10 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.app.AlertDialog.Builder;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -38,8 +37,8 @@ public class FeedBack extends Activity{
 		super.onCreate(savedInstanceBundle);
 		setContentView(R.layout.feedbackshow);
 		//添加一个回退键
-		ActionBar actionBar = getActionBar();
-		actionBar.setDisplayHomeAsUpEnabled(true);
+//		ActionBar actionBar = getActionBar();
+//		actionBar.setDisplayHomeAsUpEnabled(true);
 		setProgressDialog();
 		Button feedbackButton = (Button)findViewById(R.id.feedback_commit);
 		handler = new Handler();

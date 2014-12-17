@@ -7,7 +7,6 @@
 package com.example.coolgrammer;
 
 import android.annotation.SuppressLint;
-import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
@@ -25,9 +24,6 @@ public class Grammar extends Activity{
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.grammar);
-		//添加一个回退键
-		ActionBar actionBar = getActionBar();
-		actionBar.setDisplayHomeAsUpEnabled(true);
 		
 		//获得从 Buddle 处传过来的数据，以键名来获得值
 		Bundle bundle_1 = this.getIntent().getExtras();

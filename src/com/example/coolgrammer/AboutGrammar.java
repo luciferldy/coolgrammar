@@ -1,5 +1,4 @@
 package com.example.coolgrammer;
-import android.app.ActionBar;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -9,8 +8,8 @@ public class AboutGrammar extends Activity{
 		super.onCreate(savedInstanceBundle);
 		setContentView(R.layout.coolgrammar_about);
 		//添加一个回退键
-		ActionBar actionBar = getActionBar();
-		actionBar.setDisplayHomeAsUpEnabled(true);
+//		ActionBar actionBar = getActionBar();
+//		actionBar.setDisplayHomeAsUpEnabled(true);
 	}
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item){

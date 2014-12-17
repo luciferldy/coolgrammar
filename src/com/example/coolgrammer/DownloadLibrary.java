@@ -26,7 +26,6 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import android.annotation.SuppressLint;
-import android.app.ActionBar;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ContentValues;
@@ -66,8 +65,6 @@ public class DownloadLibrary extends Activity{
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.download_lib);
-		ActionBar actionBar_in_dl = getActionBar();
-		actionBar_in_dl.setDisplayHomeAsUpEnabled(true);
 		setProgressDialog();
 		new Thread(new getLibThread()).start();
 		//显示进度条框

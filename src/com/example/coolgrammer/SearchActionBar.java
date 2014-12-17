@@ -18,13 +18,13 @@ public class SearchActionBar extends ActionBarActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		setContentView(null);
 	}
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.air_search, menu);//获取menu目录下simple.xml的菜单文件
 		setSearch(menu);
+		setTitle("");
 		return true;
 	}
 	/**
@@ -34,6 +34,7 @@ public class SearchActionBar extends ActionBarActivity {
 	private void setSearch(Menu menu) {
 		// TODO Auto-generated method stub
 		final MenuItem item = menu.findItem(R.id.air_search);
+		item.expandActionView();
 		SearchView sv = (SearchView) MenuItemCompat.getActionView(item);
 		if(sv != null){
 			sv.setOnQueryTextListener(new OnQueryTextListener() {
@@ -58,9 +59,10 @@ public class SearchActionBar extends ActionBarActivity {
 		int id = item.getItemId();		
 		switch (id) {		
 		case R.id.air_search_delete:
-			Toast.makeText(getApplicationContext(), "您点击了取消菜单", Toast.LENGTH_SHORT).show();
 			return true;
-		
+		case R.id.home:
+			SearchActionBar.this.finish();
+			return true;
 		}
 		return super.onOptionsItemSelected(item);
 	}

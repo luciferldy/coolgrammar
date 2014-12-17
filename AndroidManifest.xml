@@ -22,7 +22,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.example.coolgrammer.Grammar">
+            android:name="com.example.coolgrammer.Grammar"
+            android:parentActivityName=".MainActivity">
         </activity>
         <activity
             android:name="com.example.coolgrammer.TimeTest"
@@ -33,16 +34,21 @@
             android:theme="@style/ActivityTheme">
         </activity>
         <activity
-            android:name="com.example.coolgrammer.DownloadLibrary">
+            android:name="com.example.coolgrammer.DownloadLibrary"
+            android:parentActivityName=".MainActivity">
         </activity>
         <activity 
-            android:name="com.example.coolgrammer.FeedBack">
+            android:name="com.example.coolgrammer.FeedBack"
+            android:parentActivityName=".MainActivity">
         </activity>
         <activity 
-            android:name="com.example.coolgrammer.AboutGrammar">
+            android:name="com.example.coolgrammer.AboutGrammar"
+            android:parentActivityName=".MainActivity">
         </activity>
         <activity 
-            android:name="com.example.coolgrammer.SearchActionBar">
+            android:name="com.example.coolgrammer.SearchActionBar"
+            android:theme="@style/Theme.AppCompat.Light"
+            android:parentActivityName=".MainActivity">
         </activity>
     </application>
 

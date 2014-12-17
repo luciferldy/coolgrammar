@@ -6,6 +6,7 @@
  */
 package com.example.coolgrammer;
 
+import android.R.anim;
 import android.os.Build;
 import android.os.Bundle;
 import android.annotation.SuppressLint;
@@ -255,6 +256,7 @@ public class MainActivity extends Activity {
 				
 			}
 			
+			@SuppressLint("ResourceAsColor")
 			@Override
 			public boolean onFling(MotionEvent arg0, MotionEvent arg1, float arg2,
 					float arg3) {
@@ -262,13 +264,11 @@ public class MainActivity extends Activity {
 				if((arg1.getRawX()-arg0.getRawX()) > 60){
 					//向后翻
 					tabhost.setCurrentTab(currentTab = currentTab == 1 ? currentTab = 0 : ++currentTab);
-					System.out.println("向后翻");
-					return true;
+					return true;	
 				}
 				else if((arg0.getRawX()-arg1.getRawX()) > 60){
 					//向前翻
 					tabhost.setCurrentTab(currentTab = currentTab == 0 ? currentTab = 1 : --currentTab);
-					System.out.println("向前翻");
 					return true;
 				}
 				else
@@ -278,7 +278,6 @@ public class MainActivity extends Activity {
 			@Override
 			public boolean onDown(MotionEvent arg0) {
 				// TODO Auto-generated method stub
-				System.out.println("Down");
 				return false;
 			}
 			
@@ -286,6 +285,7 @@ public class MainActivity extends Activity {
 //			public boolean onTouchEvent(MotionEvent event){
 //					return detector.onTouchEvent(event);
 //			}
+			
 		});
 		 
 	}
@@ -429,7 +429,6 @@ public class MainActivity extends Activity {
 			
 			//单击Grammer那一栏
 			if(arg0.getAdapter() == lv_grammar_infor.getAdapter()){
-				System.out.println("Grammer列表单击事件！");
 				//跳转到Grammer显示的界面，传递数据
 				Intent intent = new Intent();
 				intent.setClass(MainActivity.this,Grammar.class);
@@ -443,7 +442,6 @@ public class MainActivity extends Activity {
 			//单击TestLibrary那一栏
 			else if(arg0.getAdapter() == lv_testlib_infor.getAdapter()){
 				
-				System.out.println("TestLibrary列表单击事件！");
 				//跳转到Test显示的界面，传递数据
 				Intent intent = new Intent();
 				intent.setClass(MainActivity.this,TimeTest.class);
