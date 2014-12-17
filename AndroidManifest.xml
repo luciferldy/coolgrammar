@@ -39,7 +39,11 @@
             android:name="com.example.coolgrammer.FeedBack">
         </activity>
         <activity 
-            android:name="com.example.coolgrammer.AboutGrammar"></activity>
+            android:name="com.example.coolgrammer.AboutGrammar">
+        </activity>
+        <activity 
+            android:name="com.example.coolgrammer.SearchActionBar">
+        </activity>
     </application>
 
 </manifest>

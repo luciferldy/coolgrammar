@@ -301,9 +301,7 @@ public class MainActivity extends Activity {
 	
 	//弹出菜单响应函数
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item){
-		System.out.println(item.getItemId());
-		
+	public boolean onOptionsItemSelected(MenuItem item){		
 		//判断是否是Drawer的按钮被点击
 		if(mDrawerToggle.onOptionsItemSelected(item)){
 			return true;
@@ -312,9 +310,12 @@ public class MainActivity extends Activity {
 		//获取菜单项的Id
 		switch(item.getItemId()){
 		case R.id.action_search:
+			Intent intent = new Intent(MainActivity.this, SearchActionBar.class);
+			startActivity(intent);
 			break;
 		case R.id.action_exit:
-			System.exit(0);
+			exitDialog();
+			break;
 		}
 		
 		//方法回调
