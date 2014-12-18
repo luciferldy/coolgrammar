@@ -6,7 +6,6 @@
  */
 package com.example.coolgrammer;
 
-import android.R.anim;
 import android.os.Build;
 import android.os.Bundle;
 import android.annotation.SuppressLint;
@@ -94,6 +93,7 @@ public class MainActivity extends Activity {
 		initDrawerMenu();
 		initListView();
 		initTab();
+		updateTab();
 		initGestureDetector();
 	}
 	
@@ -216,6 +216,15 @@ public class MainActivity extends Activity {
 		tabhost.addTab(tabhost.newTabSpec("Grammar").setContent(R.id.main_tab_one).setIndicator("Grammar"));
 		tabhost.addTab(tabhost.newTabSpec("Test").setContent(R.id.main_tab_two).setIndicator("Test"));
 		tabhost.setCurrentTab(0);
+		tabhost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
+			
+			@Override
+			public void onTabChanged(String arg0) {
+				// TODO Auto-generated method stub
+				tabhost.setCurrentTabByTag(arg0);
+				updateTab();
+			}
+		});
 	
 	}
 	
@@ -263,29 +272,22 @@ public class MainActivity extends Activity {
 				// TODO Auto-generated method stub
 				if((arg1.getRawX()-arg0.getRawX()) > 60){
 					//向后翻
-					tabhost.setCurrentTab(currentTab = currentTab == 1 ? currentTab = 0 : ++currentTab);
-					return true;	
+					tabhost.setCurrentTab(currentTab = currentTab == 1 ? currentTab = 0 : ++currentTab);	
 				}
 				else if((arg0.getRawX()-arg1.getRawX()) > 60){
 					//向前翻
 					tabhost.setCurrentTab(currentTab = currentTab == 0 ? currentTab = 1 : --currentTab);
-					return true;
 				}
-				else
-					return true;
+				else{}
+				updateTab();
+				return true;
 			}
 			
 			@Override
 			public boolean onDown(MotionEvent arg0) {
 				// TODO Auto-generated method stub
 				return false;
-			}
-			
-//			@Override
-//			public boolean onTouchEvent(MotionEvent event){
-//					return detector.onTouchEvent(event);
-//			}
-			
+			}		
 		});
 		 
 	}
@@ -744,4 +746,21 @@ public class MainActivity extends Activity {
 			}
 		}
 	}
+	
+	@SuppressWarnings("unused")
+	private void updateTab() {  
+        for (int i = 0; i < tabhost.getTabWidget().getChildCount(); i++) {  
+            View view = tabhost.getTabWidget().getChildAt(i);  
+            TextView tv = (TextView) tabhost.getTabWidget().getChildAt(i).findViewById(android.R.id.title);  
+            if (tabhost.getCurrentTab() == i) {//选中  
+//                view.setBackgroundDrawable(getResources().getDrawable(R.drawable.category_current));//选中后的背景  
+                tv.setTextColor(this.getResources().getColorStateList(  
+                        android.R.color.holo_blue_light));  
+            } else {//不选中  
+//                view.setBackgroundDrawable(getResources().getDrawable(R.drawable.category_bg));//非选择的背景  
+                tv.setTextColor(this.getResources().getColorStateList(  
+                        android.R.color.black));  
+            }  
+        }  
+    }  
 }
