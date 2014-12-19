@@ -32,7 +32,7 @@ public class CloudDictionaryJsonHandle {
 		this.keys = keys.trim();
 		if(getDictionaryJsonContent().equals("-1")){
 			// 报错
-			Log.v("CloudTranslateJsonHandle.CloudTranslateJsonHandle", "cloudtranslate无法获得正常json数据");
+			Log.v("CloudDictionaryJsonHandle.CloudDictionaryJsonHandle", "clouddictionary无法获得正常json数据");
 			ifreturnresult = false;
 		}
 		else {

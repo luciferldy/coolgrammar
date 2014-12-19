@@ -31,7 +31,7 @@
         android:layout_height="wrap_content"
         android:minHeight="60dp"
         android:layout_alignParentBottom="true"
-        android:text="@string/button5_6"/>
+        android:text="进入解析"/>
 
     <LinearLayout
         android:id="@+id/show_grade_contain_grade"

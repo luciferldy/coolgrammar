@@ -28,7 +28,7 @@
 		    android:layout_height="wrap_content"
 		    android:layout_alignParentLeft="true"
 		    android:textSize="16sp"
-		    android:text="@string/textView3_1"
+		    android:text="名词训练（一）"
 		    android:gravity="center_vertical"
 		    android:visibility="visible" />
         <RatingBar

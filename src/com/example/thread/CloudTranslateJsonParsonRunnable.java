@@ -5,14 +5,12 @@ import java.util.HashMap;
 
 import android.content.Context;
 import android.os.Handler;
-import android.util.Log;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 import com.example.coolgrammer.R;
 import com.example.jsonparse.CloudDictionaryJsonHandle;
-import com.example.jsonparse.CloudTranslateJsonHandle;
 
 public class CloudTranslateJsonParsonRunnable implements Runnable{
 

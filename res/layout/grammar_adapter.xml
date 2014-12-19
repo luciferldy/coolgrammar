@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         android:textSize="16sp"
         android:gravity="center_vertical"
-        android:text="@string/textView2_1"/>
+        android:text="名词"/>
     <TextView 
         android:id="@+id/grammar_adapter_description"
         android:layout_width="fill_parent"

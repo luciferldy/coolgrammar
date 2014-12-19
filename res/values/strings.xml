@@ -1,27 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">酷爽语法</string>
-    
-    <string name="action_1">删除本地数据库</string>
-    <string name="action_2">下载词库</string>
-    
-    <string name="textView2_1">名词</string>
-    
-    <string name="textView3_1">名词专项</string>
-    
-    
-    <string name="button5_3">上一道</string>
-    <string name="button5_4">下一道</string>
-    <string name="button5_5">退出</string>
-    
-    <string name="textView5_4">正确率</string>
-    <string name="textView5_6">时间</string>
-    <string name="textView5_5">难度等级</string>
-    
-    <string name="button5_6">进入解析</string>
     <string name="drawer_open">菜单划开</string>
     <string name="drawer_close">菜单关掉</string>
-    
-   
-
+    <string name="cloud_translate_hint">请输入一个英文单词</string>
 </resources>
