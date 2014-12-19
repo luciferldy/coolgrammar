@@ -9,6 +9,7 @@ import android.support.v7.widget.SearchView.OnQueryTextListener;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.thread.CloudTranslateJsonParsonRunnable;
 /**
@@ -31,9 +32,8 @@ public class SearchActionBar extends ActionBarActivity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.air_search, menu);//获取menu目录下simple.xml的菜单文件
+		getMenuInflater().inflate(R.menu.cloud_translate, menu);//获取menu目录下simple.xml的菜单文件
 		setSearchActionBar(menu);
-		setTitle("");
 		return true;
 	}
 	/**
@@ -42,17 +42,23 @@ public class SearchActionBar extends ActionBarActivity {
 	 */
 	private void setSearchActionBar(Menu menu) {
 		// TODO Auto-generated method stub
+		getActionBar().setDisplayShowTitleEnabled(false);
+		
 		final MenuItem item = menu.findItem(R.id.air_search);
 		item.expandActionView();
 		SearchView sv = (SearchView) MenuItemCompat.getActionView(item);
 		if(sv != null){
 			sv.setSubmitButtonEnabled(true);
+			sv.setQueryHint(getResources().getString(R.string.cloud_translate_hint));
+//			sv.setIconifiedByDefault(false);
+			sv.setIconified(false);
 			sv.setOnQueryTextListener(new OnQueryTextListener() {
 				@Override
 				public boolean onQueryTextSubmit(String arg0) {
-					MenuItemCompat.collapseActionView(item);
-					Thread thread = new Thread(new CloudTranslateJsonParsonRunnable(translate_result, getApplicationContext(), arg0, handler));
-					thread.start();
+					if(checkInput(arg0.trim())){
+						Thread thread = new Thread(new CloudTranslateJsonParsonRunnable(translate_result, getApplicationContext(), arg0.trim(), handler));
+						thread.start();
+					}
 					return true;
 				}				
 				@Override
@@ -70,7 +76,8 @@ public class SearchActionBar extends ActionBarActivity {
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();		
 		switch (id) {		
-		case R.id.air_search_delete:
+		case R.id.air_search_back:
+			finish();
 			return true;
 		case R.id.home:
 			SearchActionBar.this.finish();
@@ -81,5 +88,19 @@ public class SearchActionBar extends ActionBarActivity {
 	
 	protected void initResultView(){
 		translate_result = (ListView)findViewById(R.id.trans_result);
+	}
+	
+	protected boolean checkInput(String input){
+		String word="qazwsxedcrfvtgbyhnujmiklopQAZWSXEDCRFVTGBYHNUJMILOP ";
+		for (int i = 0; i < input.length(); i++) {
+			if (word.contains(input.charAt(i)+"")) {
+				
+			}
+			else {
+				Toast.makeText(this, "请输入一个单词", Toast.LENGTH_SHORT).show();
+				return false;
+			}
+		}
+		return true;
 	}
 }
