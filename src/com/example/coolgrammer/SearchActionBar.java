@@ -1,11 +1,12 @@
 package com.example.coolgrammer;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.view.MenuItemCompat;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.widget.SearchView;
-import android.support.v7.widget.SearchView.OnQueryTextListener;
+import android.app.SearchManager;
+import android.widget.SearchView;
+import android.widget.SearchView.OnQueryTextListener;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
@@ -17,7 +18,7 @@ import com.example.thread.CloudTranslateJsonParsonRunnable;
  * @author liandongyang
  * Date:2014.10.13
  */
-public class SearchActionBar extends ActionBarActivity {
+public class SearchActionBar extends Activity {
 	
 	ListView translate_result;
 	Handler handler;
