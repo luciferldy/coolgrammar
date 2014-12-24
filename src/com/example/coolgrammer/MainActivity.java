@@ -22,6 +22,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.view.GestureDetector;
 import android.view.KeyEvent;
@@ -51,12 +52,13 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.astuetz.PagerSlidingTabStrip;
+import com.example.listener.MainDrawerListener;
+
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class MainActivity extends Activity {
 
-	private static MyDBHelper myDbHelper = null;
-	private static SQLiteDatabase mdb = null ;
-	private Context context = null;
+	
 	
 	// 泛型数组+哈希图
 	private ArrayList<HashMap<String, Object>> grammar_infor = null;
@@ -66,14 +68,9 @@ public class MainActivity extends Activity {
 	private ListView lv_grammar_infor = null;
 	private ListView lv_testlib_infor = null;
 	
-	//当前界面
-	private int currentTab = 0;
+	PagerSlidingTabStrip main_tabs;
+	private ViewPager main_viewpager;
 	
-	//监听手势
-	private GestureDetector detector = null;
-	
-	//tabhost
-	private TabHost tabhost = null;
 	//适配器
 	TestLibAdapter myadapter0_1 = null;
 	
@@ -91,10 +88,7 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);	
 		importDataBase();
 		initDrawerMenu();
-		initListView();
-		initTab();
-		updateTab();
-		initGestureDetector();
+		initView();
 	}
 	
 	// 初始化左滑菜单
@@ -107,7 +101,7 @@ public class MainActivity extends Activity {
 		SimpleAdapter left_menu_adapter = new SimpleAdapter(this, getLeftView(), R.layout.left_menu_adapter, new String[]{"img", "title"}, new int[]{R.id.imgview_main_leftmenu, R.id.textview_main_leftmenu});
 		listview_main_left_menu.setAdapter(left_menu_adapter);
 		//设置监听器
-		listview_main_left_menu.setOnItemClickListener(new TabOnItemClickListener());
+		listview_main_left_menu.setOnItemClickListener(new MainDrawerListener(getApplicationContext()));
 		drawerlayout_main.setDrawerShadow(null, GravityCompat.START);
 		//设置滑动菜单的监听器
 		mDrawerToggle = new ActionBarDrawerToggle(this, drawerlayout_main, R.drawable.ic_drawer, R.string.drawer_open, R.string.drawer_close){
@@ -169,127 +163,9 @@ public class MainActivity extends Activity {
     } 
     
 	//设置Grammer列表和Test列表
-	public void initListView(){
-		//获取列表
-		grammar_infor = getGrammar();
-		testlib_infor = getTestLibrary();
-		
-		TabOnItemClickListener tabonitemclicklistener = new TabOnItemClickListener();
-		//Grammer的列表
-		lv_grammar_infor = (ListView) findViewById(R.id.main_tab_one_listview);
-		//构造适配器，String[]里面的是HashMap中对应的键值名，后面的int[]是对应放入的TextView
-		SimpleAdapter listItemAdapter0_1 = new SimpleAdapter(this, grammar_infor,
-				R.layout.grammar_adapter, new String[] {"title", "description"}, new int[] {R.id.grammar_adapter_title, R.id.grammar_adapter_description});
-		//将适配器置到ListView中
-		lv_grammar_infor.setAdapter(listItemAdapter0_1);
-		// 添加ListView点击
-		lv_grammar_infor.setOnItemClickListener(tabonitemclicklistener);
-		lv_grammar_infor.setOnTouchListener(new View.OnTouchListener() {
-			
-			@Override
-			public boolean onTouch(View arg0, MotionEvent arg1) {
-				// TODO Auto-generated method stub
-				return detector.onTouchEvent(arg1);
-			}
-		});
-		
-		//TestLibrary的列表
-		lv_testlib_infor = (ListView) findViewById(R.id.main_tab_two_listview);
-		myadapter0_1 = new TestLibAdapter(this);
-		lv_testlib_infor.setAdapter(myadapter0_1);
-		lv_testlib_infor.setOnItemClickListener(tabonitemclicklistener);
-		lv_testlib_infor.setOnTouchListener(new View.OnTouchListener() {
-			
-			@Override
-			public boolean onTouch(View arg0, MotionEvent arg1) {
-				// TODO Auto-generated method stub
-				return detector.onTouchEvent(arg1);
-			}
-		});
-	}
-
-	//设置tabhost选项卡
-	public void initTab(){
-		
-		tabhost = (TabHost)findViewById(R.id.tabhost); //控件与资源ID绑定
-		tabhost.setup();
-		tabhost.addTab(tabhost.newTabSpec("Grammar").setContent(R.id.main_tab_one).setIndicator("Grammar"));
-		tabhost.addTab(tabhost.newTabSpec("Test").setContent(R.id.main_tab_two).setIndicator("Test"));
-		tabhost.setCurrentTab(0);
-		tabhost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
-			
-			@Override
-			public void onTabChanged(String arg0) {
-				// TODO Auto-generated method stub
-				tabhost.setCurrentTabByTag(arg0);
-				updateTab();
-			}
-		});
-	
-	}
-	
-//	//监听手势的类
-//	@Override
-//	public boolean onTouchEvent(MotionEvent event){
-//		detector.onTouchEvent(event);
-//		return super.onTouchEvent(event);
-//	}
-	
-	@SuppressWarnings("deprecation")
-	public void initGestureDetector(){
-		//手势监听
-		 detector = new GestureDetector(new GestureDetector.OnGestureListener(){
-			
-			@Override
-			public boolean onSingleTapUp(MotionEvent arg0) {
-				// TODO Auto-generated method stub
-				return false;
-			}
-			
-			@Override
-			public void onShowPress(MotionEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public boolean onScroll(MotionEvent arg0, MotionEvent arg1, float arg2,
-					float arg3) {
-				// TODO Auto-generated method stub
-				return false;
-			}
-			
-			@Override
-			public void onLongPress(MotionEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@SuppressLint("ResourceAsColor")
-			@Override
-			public boolean onFling(MotionEvent arg0, MotionEvent arg1, float arg2,
-					float arg3) {
-				// TODO Auto-generated method stub
-				if((arg1.getRawX()-arg0.getRawX()) > 60){
-					//向后翻
-					tabhost.setCurrentTab(currentTab = currentTab == 1 ? currentTab = 0 : ++currentTab);	
-				}
-				else if((arg0.getRawX()-arg1.getRawX()) > 60){
-					//向前翻
-					tabhost.setCurrentTab(currentTab = currentTab == 0 ? currentTab = 1 : --currentTab);
-				}
-				else{}
-				updateTab();
-				return true;
-			}
-			
-			@Override
-			public boolean onDown(MotionEvent arg0) {
-				// TODO Auto-generated method stub
-				return false;
-			}		
-		});
-		 
+	public void initView(){
+		main_tabs = (PagerSlidingTabStrip)findViewById(R.id.tabs);
+		main_viewpager = (ViewPager)findViewById(R.id.main_viewpager);
 	}
 
 	//这个是设置的弹出菜单的函数
@@ -331,165 +207,7 @@ public class MainActivity extends Activity {
 		return super.onContextItemSelected(item);
 	}
 	
-	//获取数据库中Grammer表的所有信息
-	public ArrayList<HashMap<String, Object>> getGrammar(){
-		//泛型数组
-		ArrayList<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
-		try{
-			//数据库创建
-			context = (Context)this;
-			myDbHelper = new MyDBHelper(context);
-			mdb = myDbHelper.getReadableDatabase();
-			
-			Cursor cursor = null;
-			//获取数据库中所有元组
-			cursor = mdb.query("Grammar", new String[] {"id","title","description"}, null, null, null, null, null);
-			if(cursor.getCount()==0)
-				Toast.makeText(this,"no data in table Grammar!",Toast.LENGTH_SHORT).show();
-			
-			//HashMap存储
-			HashMap<String,Object> item = null;
-			while(cursor.moveToNext()){
-				item = new HashMap<String,Object>();
-				//获取id
-				item.put("id", cursor.getString(cursor.getColumnIndex("id")));
-				//获取title
-				item.put("title", cursor.getString(cursor.getColumnIndex("title")));
-				//获取description
-				item.put("description", cursor.getString(cursor.getColumnIndex("description")));
-				//获取content
-				//item.put("content", cursor.getString(cursor.getColumnIndex("content")));
-				//保存到list组中
-				list.add(item);
-			}
-			mdb.close();
-		}
-		catch (Exception e){
-			e.printStackTrace();
-			mdb.close();
-		}
-		return list;	
-	}
 
-	//获取数据库中TestLibrary表的信息
-	public ArrayList<HashMap<String, Object>> getTestLibrary(){
-		
-		//泛型数组
-		ArrayList<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
-		try{
-			//数据库创建
-			context = (Context)this;
-			myDbHelper = new MyDBHelper(context);
-			mdb = myDbHelper.getReadableDatabase();
-			
-			Cursor cursor = null;
-			//获取数据库中所有元组
-			cursor = mdb.query("TestLibrary", new String[] {"id","grammarId", "title","description", "itemCount", "level", "createDate"}, null, null, null, null, null);
-			if(cursor.getCount()==0)
-				Toast.makeText(this, "no data in table TestLibrary", Toast.LENGTH_SHORT).show();
-			
-			HashMap<String,Object> item = null;
-			while(cursor.moveToNext()){	
-				item = new HashMap<String,Object>();
-				//获取id,这里面的这个cursor.getColumenIndex("id")可以直接用0代替
-				item.put("id", cursor.getString(cursor.getColumnIndex("id")));
-				//获取garmmerId
-				item.put("grammerId", cursor.getString(cursor.getColumnIndex("grammarId")));
-				//获取title
-				item.put("title", cursor.getString(cursor.getColumnIndex("title")));
-				//获取description
-				item.put("description", cursor.getString(cursor.getColumnIndex("description")));
-				//获取itemCount
-				item.put("itemCount", cursor.getInt(cursor.getColumnIndex("itemCount")));
-				//获取level
-				item.put("level",cursor.getInt(cursor.getColumnIndex("level")));
-				//获取createData
-				item.put("createDate",cursor.getInt(cursor.getColumnIndex("createDate")));
-				//获取downloadCount
-				//item.put("downloadCount",cursor.getInt(cursor.getColumnIndex("downloadCount")));
-				//保存到日记组中
-				list.add(item);
-			}
-			mdb.close();
-			
-		}
-		catch(Exception e){
-			e.printStackTrace();
-			mdb.close();
-		}
-		return list;
-	}
-
-	//ListView表中选项的单击监听器
-	
-	//每一个ListView的监听器
-	public class TabOnItemClickListener implements OnItemClickListener{
-		
-		@Override
-		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-				long arg3) {
-			
-			//单击Grammer那一栏
-			if(arg0.getAdapter() == lv_grammar_infor.getAdapter()){
-				//跳转到Grammer显示的界面，传递数据
-				Intent intent = new Intent();
-				intent.setClass(MainActivity.this,Grammar.class);
-				//在Bundle中存放数据，使用“键”-“值”的方式存放数据
-				Bundle bundle = new Bundle();
-				bundle.putString("id",grammar_infor.get(arg2).get("id").toString());
-				intent.putExtras(bundle);
-				startActivity(intent);
-			}
-			
-			//单击TestLibrary那一栏
-			else if(arg0.getAdapter() == lv_testlib_infor.getAdapter()){
-				
-				//跳转到Test显示的界面，传递数据
-				Intent intent = new Intent();
-				intent.setClass(MainActivity.this,TimeTest.class);
-				
-				//在Bundle中存放数据，使用“键”-“值”的方式存放数据
-				Bundle bundle = new Bundle();
-				bundle.putString("libraryId",testlib_infor.get(arg2).get("id").toString());
-				bundle.putString("title",testlib_infor.get(arg2).get("title").toString());
-				bundle.putInt("level", Integer.parseInt(testlib_infor.get(arg2).get("level").toString()));
-				intent.putExtras(bundle);
-				startActivity(intent);
-				System.out.println("Original MainActivity!");
-			}	
-			else if(arg0.getAdapter() == listview_main_left_menu.getAdapter()){
-				System.out.println("LeftMenu滑动菜单的单击事件");
-				Intent intent;
-				switch (arg2) {
-				case 0:
-					intent = new Intent(MainActivity.this, DownloadLibrary.class);
-					startActivity(intent);
-					break;
-				case 1:
-					intent = new Intent(MainActivity.this, FeedBack.class);
-					startActivity(intent);
-					break;
-				case 2:
-					intent = new Intent(MainActivity.this, AboutGrammar.class);
-					startActivity(intent);
-					break;
-				default:
-					break;
-				}
-			}
-			else {
-				//下载词库
-				if(arg2 == 0){
-					Intent intent = new Intent(MainActivity.this, DownloadLibrary.class);
-					intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-					startActivity(intent);
-				}
-				
-			}
-		}
-	}
-
-	
 	//TestLibrary列表中删除和详细信息的监听器
 	public class lib_Imgbtn_Listener implements OnClickListener{
 		
@@ -746,21 +464,4 @@ public class MainActivity extends Activity {
 			}
 		}
 	}
-	
-	@SuppressWarnings("unused")
-	private void updateTab() {  
-        for (int i = 0; i < tabhost.getTabWidget().getChildCount(); i++) {  
-            View view = tabhost.getTabWidget().getChildAt(i);  
-            TextView tv = (TextView) tabhost.getTabWidget().getChildAt(i).findViewById(android.R.id.title);  
-            if (tabhost.getCurrentTab() == i) {//选中  
-//                view.setBackgroundDrawable(getResources().getDrawable(R.drawable.category_current));//选中后的背景  
-                tv.setTextColor(this.getResources().getColorStateList(  
-                        android.R.color.holo_blue_light));  
-            } else {//不选中  
-//                view.setBackgroundDrawable(getResources().getDrawable(R.drawable.category_bg));//非选择的背景  
-                tv.setTextColor(this.getResources().getColorStateList(  
-                        android.R.color.black));  
-            }  
-        }  
-    }  
 }

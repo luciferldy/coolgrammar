@@ -8,61 +8,21 @@
     android:id="@+id/drawer_layout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
-    
-    <TabHost android:id="@+id/tabhost" 
-    
-	    android:layout_width="fill_parent"
-	    android:layout_height="fill_parent"
-	    tools:context=".MainActivity">
-	   
-	    <LinearLayout
-	        android:id="@+id/main_tb_linearlayout"
-	        android:orientation="vertical"
-	        android:layout_width="fill_parent"
-	        android:layout_height="fill_parent">
-	
-	        <TabWidget
-	            android:id="@android:id/tabs"
-	            android:layout_width="match_parent"
-	            android:layout_height="50dp" >
-	        </TabWidget>
-	        
-	        <FrameLayout
-	            android:id="@android:id/tabcontent"
-	            android:layout_width="fill_parent"
-	            android:layout_height="fill_parent" >
-	            
-	            <LinearLayout 
-	                android:id="@+id/main_tab_one"
-	                android:layout_width="fill_parent"
-	                android:layout_height="fill_parent"
-	                android:orientation="vertical" >
-	                
-	                <ListView
-	                    android:id="@+id/main_tab_one_listview"
-	                    android:layout_width="fill_parent"
-	                    android:layout_height="fill_parent"
-	                    android:dividerHeight="1dp"
-	                    android:divider="#DDDDDD">
-	                </ListView>
-	    		</LinearLayout>
-	    		<LinearLayout 
-	    		    android:id="@+id/main_tab_two"
-	    		    android:layout_width="fill_parent"
-	    		    android:layout_height="fill_parent"
-	    		    android:orientation="vertical" >
-	                
-	    		    <ListView
-	    		        android:id="@+id/main_tab_two_listview"
-	    		        android:layout_width="fill_parent"
-	    		        android:layout_height="fill_parent"
-	    		        android:dividerHeight="1dp"
-	    		        android:divider="#DDDDDD">
-	    		    </ListView>
-	    		</LinearLayout>
-	    	</FrameLayout>
-	    </LinearLayout>
-	</TabHost>
+    <RelativeLayout 
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+        <com.astuets.PagerSlidingTabStrip
+	        android:id="@+id/tabs"
+	        android:layout_width="match_parent"
+	        android:layout_height="50sp">
+	    </com.astuets.PagerSlidingTabStrip>
+	    <android.support.v4.view.ViewPager
+	        android:id="@+id/main_viewpager"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@id/tabs">
+	    </android.support.v4.view.ViewPager>
+    </RelativeLayout>
 	<ListView
 	    android:id="@+id/listview_left_menu_main"
 	    android:layout_width="200dp"
