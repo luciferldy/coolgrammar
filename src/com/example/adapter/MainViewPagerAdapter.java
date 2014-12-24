@@ -8,8 +8,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 public class MainViewPagerAdapter extends FragmentPagerAdapter {
 
-	private final String[] TITLES = { "Categories", "Home", "Top Paid", "Top Free", "Top Grossing", "Top New Paid",
-			"Top New Free", "Trending" };
+	private final String[] TITLES = { "GRAMMAR", "TEST"};
 
 	public MainViewPagerAdapter(FragmentManager fm) {
 		super(fm);
