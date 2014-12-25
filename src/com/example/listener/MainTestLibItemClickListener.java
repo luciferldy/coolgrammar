@@ -24,7 +24,7 @@ public class MainTestLibItemClickListener implements OnItemClickListener{
 		// TODO Auto-generated method stub
 		Intent intent = new Intent(context, TimeTest.class);
 		Bundle bundle = new Bundle();
-		bundle.putString("libraryId",testlib_data.get(arg2).get("libraryId").toString());
+		bundle.putString("libraryId",testlib_data.get(arg2).get("id").toString());
 		bundle.putInt("level", Integer.parseInt(testlib_data.get(arg2).get("level").toString()));
 		bundle.putString("title", testlib_data.get(arg2).get("title").toString());
 		intent.putExtras(bundle);

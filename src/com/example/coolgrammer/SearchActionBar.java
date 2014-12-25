@@ -4,10 +4,12 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.view.MenuItemCompat;
+import android.widget.ProgressBar;
 import android.widget.SearchView;
 import android.widget.SearchView.OnQueryTextListener;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -21,6 +23,7 @@ public class SearchActionBar extends Activity {
 	
 	ListView translate_result;
 	Handler handler;
+	ProgressBar loading_translate;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -43,7 +46,7 @@ public class SearchActionBar extends Activity {
 	private void setSearchActionBar(Menu menu) {
 		// TODO Auto-generated method stub
 		getActionBar().setDisplayShowTitleEnabled(false);
-		
+		loading_translate = (ProgressBar)findViewById(R.id.cloud_translate_progressbar);
 		final MenuItem item = menu.findItem(R.id.air_search);
 		item.expandActionView();
 		SearchView sv = (SearchView) MenuItemCompat.getActionView(item);
@@ -56,7 +59,9 @@ public class SearchActionBar extends Activity {
 				@Override
 				public boolean onQueryTextSubmit(String arg0) {
 					if(checkInput(arg0.trim())){
-						Thread thread = new Thread(new CloudTranslateJsonParsonRunnable(translate_result, getApplicationContext(), arg0.trim(), handler));
+						loading_translate.setVisibility(View.VISIBLE);
+						Thread thread = new Thread(new CloudTranslateJsonParsonRunnable(translate_result, getApplicationContext(),
+								arg0.trim(), handler, loading_translate));
 						thread.start();
 					}
 					return true;
