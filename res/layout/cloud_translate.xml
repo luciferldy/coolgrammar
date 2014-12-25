@@ -6,10 +6,10 @@
         android:id="@+id/cloud_translate_progressbar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20sp"
+        android:layout_marginTop="45sp"
         android:layout_centerHorizontal="true"
         android:indeterminateDrawable="@drawable/cloud_translate_rotate_loading"
-        android:visibility="invisible"/>
+        android:visibility="visible"/>
     <ListView 
         android:id="@+id/trans_result"
         android:layout_width="fill_parent"

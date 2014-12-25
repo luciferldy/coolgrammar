@@ -60,6 +60,7 @@ public class SearchActionBar extends Activity {
 				public boolean onQueryTextSubmit(String arg0) {
 					if(checkInput(arg0.trim())){
 						loading_translate.setVisibility(View.VISIBLE);
+						translate_result.setVisibility(View.GONE);
 						Thread thread = new Thread(new CloudTranslateJsonParsonRunnable(translate_result, getApplicationContext(),
 								arg0.trim(), handler, loading_translate));
 						thread.start();

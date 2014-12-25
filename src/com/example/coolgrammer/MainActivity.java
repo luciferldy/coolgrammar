@@ -8,6 +8,7 @@ package com.example.coolgrammer;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.R.animator;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
@@ -15,6 +16,8 @@ import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.content.res.Resources.Theme;
+import android.graphics.Color;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.GravityCompat;
@@ -38,6 +41,7 @@ import java.util.HashMap;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.example.adapter.MainViewPagerAdapter;
+import com.example.coolgrammer.R.color;
 import com.example.listener.MainDrawerItemClickListener;
 
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
@@ -68,7 +72,6 @@ public class MainActivity extends FragmentActivity {
 	@SuppressLint("ResourceAsColor")
 	public void initView(){
 		main_tabs = (PagerSlidingTabStrip)findViewById(R.id.tabs);
-		main_tabs.setUnderlineColor(R.color.focusblue);
 		main_tabs.setShouldExpand(true);
 		main_viewpager = (ViewPager)findViewById(R.id.main_viewpager);
 		main_viewpager_adapter = new MainViewPagerAdapter(getSupportFragmentManager());
@@ -77,9 +80,9 @@ public class MainActivity extends FragmentActivity {
 		int pageMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4, getResources()
 				.getDisplayMetrics());
 		main_viewpager.setPageMargin(pageMargin);
-
 		main_tabs.setViewPager(main_viewpager);
-		
+		// 这里整整写了一晚上啊，坑爹啊，直接设置貌似是不好使
+		main_tabs.setIndicatorColor(getResources().getColor(R.color.focusholo));
 	}
 		
 	// 初始化左侧滑菜单

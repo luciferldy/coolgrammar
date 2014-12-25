@@ -9,6 +9,5 @@
     <bitmap
         android:antialias="true"
         android:filter="true"
-        android:src="@drawable/ic_action_search" />
-
+        android:src="@drawable/translate_loading" />
 </rotate>
