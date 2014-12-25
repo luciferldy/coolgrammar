@@ -2,7 +2,7 @@ package com.example.listener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.app.AlertDialog.Builder;
@@ -15,7 +15,6 @@ import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.adapter.MainTestLibAdapter;
 import com.example.coolgrammer.MyDBHelper;
 import com.example.coolgrammer.R;
@@ -75,10 +74,10 @@ public class MainTestLibDetailAndDelClickListener implements OnClickListener{
 	}
 	
 	//响应点击详细事件
+	@SuppressLint("InflateParams")
 	public void showDetailDialog(){
 		LayoutInflater inflater = LayoutInflater.from(context);
-		View layout = inflater.inflate(R.layout.detail_dialog, (ViewGroup)(context.getResources().getLayout(R.id.linear_detail)));
-		
+		View layout = inflater.inflate(R.layout.detail_dialog, null);
 		TextView tv_title = (TextView)layout.findViewById(R.id.tv_detail_title);
 		tv_title.setText("名称："+testlib_infor.get(lib_order).get("title"));
 		TextView tv_description = (TextView)layout.findViewById(R.id.tv_detail_descrip);
