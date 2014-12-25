@@ -2,6 +2,7 @@ package com.example.listener;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -32,8 +33,10 @@ public class MainDrawerItemClickListener implements OnItemClickListener{
 			intent = new Intent(context, AboutGrammar.class);
 			break;
 		default:
+			Log.v("MainDrawerItemClickListener.OnItemClick", "no button number is matched!");
 			return;
 		}
+		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		context.startActivity(intent);
 	}
 }

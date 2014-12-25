@@ -6,6 +6,7 @@ import java.util.HashMap;
 import com.example.adapter.MainTestLibAdapter;
 import com.example.coolgrammer.R;
 import com.example.db.GrammarData;
+import com.example.db.TestLibraryData;
 import com.example.listener.MainGrammarItemClickListener;
 import com.example.listener.MainTestLibItemClickListener;
 
@@ -52,7 +53,7 @@ public class MainViewPagerFragment extends Fragment {
 
 		final int margin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8, getResources()
 				.getDisplayMetrics());
-		
+		Log.v("MainViewPagerFragment.onCreateView.postion", position+"");
 		// 在这里添加控件？
 		switch (position) {
 		case 0:
@@ -90,6 +91,7 @@ public class MainViewPagerFragment extends Fragment {
 		ListView testlib = new ListView(getActivity());
 		//TestLibrary的列表
 		ArrayList<HashMap<String, Object>> testlib_infor = new ArrayList<HashMap<String,Object>>();
+		testlib_infor = (new TestLibraryData(getActivity())).getTestLibraryData();
 		testlib.setAdapter(new MainTestLibAdapter(getActivity(), testlib_infor));
 		testlib.setOnItemClickListener(new MainTestLibItemClickListener(getActivity(), testlib_infor));
 		testlib.setDividerHeight(2);

@@ -50,7 +50,7 @@ public class MainActivity extends FragmentActivity {
 	//以下是左侧侧滑菜单的控件显示
 	private ActionBarDrawerToggle mDrawerToggle;
 	private DrawerLayout drawerlayout_main;
-	private RelativeLayout relativeLayout_main;
+//	private RelativeLayout relativeLayout_main;
 	private ListView listview_main_left_menu;
 	
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
@@ -64,9 +64,12 @@ public class MainActivity extends FragmentActivity {
 		initView();
 	}
 	
-	//设置Grammer列表和Test列表
+	//初始化pagersliding和viewpager
+	@SuppressLint("ResourceAsColor")
 	public void initView(){
 		main_tabs = (PagerSlidingTabStrip)findViewById(R.id.tabs);
+		main_tabs.setUnderlineColor(R.color.focusblue);
+		main_tabs.setShouldExpand(true);
 		main_viewpager = (ViewPager)findViewById(R.id.main_viewpager);
 		main_viewpager_adapter = new MainViewPagerAdapter(getSupportFragmentManager());
 		
