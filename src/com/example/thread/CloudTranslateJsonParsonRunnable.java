@@ -48,7 +48,7 @@ public class CloudTranslateJsonParsonRunnable implements Runnable{
 					SimpleAdapter adapter = new SimpleAdapter(context, result, R.layout.cloud_dictionary_list_item, 
 							new String[]{"word_name", "ph_am", "ph_en", "explain"}, new int[]{R.id.before_dictionary, R.id.ph_am, R.id.ph_en, R.id.after_dictionary});
 					translate_result.setAdapter(adapter);
-					
+					translate_result.setVisibility(View.VISIBLE);
 				}
 			});
 		}
@@ -59,6 +59,7 @@ public class CloudTranslateJsonParsonRunnable implements Runnable{
 				public void run() {
 					// TODO Auto-generated method stub
 					Toast.makeText(context, "抱歉，出错了", Toast.LENGTH_SHORT).show();
+					loading_translate.setVisibility(View.GONE);
 				}
 			});
 		}

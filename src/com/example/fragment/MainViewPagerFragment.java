@@ -53,6 +53,7 @@ public class MainViewPagerFragment extends Fragment {
 
 		final int margin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8, getResources()
 				.getDisplayMetrics());
+		params.setMargins(margin, margin, margin, margin);
 		Log.v("MainViewPagerFragment.onCreateView.postion", position+"");
 		// 在这里添加控件？
 		switch (position) {
@@ -71,6 +72,9 @@ public class MainViewPagerFragment extends Fragment {
 	// 造grammar的listview
 	public ListView initGrammar(){
 		ListView grammar = new ListView(getActivity());
+		// 前后顺序很关键
+		grammar.setDivider(getResources().getDrawable(R.color.dividergray));
+		grammar.setDividerHeight(2);
 		ArrayList<HashMap<String, Object>> grammar_infor = new ArrayList<HashMap<String,Object>>();
 		grammar_infor = (new GrammarData(getActivity())).getGrammarData();
 		//构造适配器，String[]里面的是HashMap中对应的键值名，后面的int[]是对应放入的TextView
@@ -81,8 +85,6 @@ public class MainViewPagerFragment extends Fragment {
 		grammar.setAdapter(listItemAdapter0_1);
 		// 添加ListView点击
 		grammar.setOnItemClickListener(new MainGrammarItemClickListener(getActivity(), grammar_infor));
-		grammar.setDividerHeight(2);
-		grammar.setDivider(getResources().getDrawable(R.color.dividergray));
 		return grammar;
 	}
 	
@@ -94,8 +96,10 @@ public class MainViewPagerFragment extends Fragment {
 		testlib_infor = (new TestLibraryData(getActivity())).getTestLibraryData();
 		testlib.setAdapter(new MainTestLibAdapter(getActivity(), testlib_infor));
 		testlib.setOnItemClickListener(new MainTestLibItemClickListener(getActivity(), testlib_infor));
-		testlib.setDividerHeight(2);
+		
 		testlib.setDivider(getResources().getDrawable(R.color.dividergray));
+		testlib.setDividerHeight(2);
+		
 		return testlib;
 	}
 }
