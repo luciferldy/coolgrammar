@@ -47,6 +47,7 @@ public class SearchActionBar extends Activity {
 		// TODO Auto-generated method stub
 		getActionBar().setDisplayShowTitleEnabled(false);
 		loading_translate = (ProgressBar)findViewById(R.id.cloud_translate_progressbar);
+		loading_translate.setVisibility(View.GONE);
 		final MenuItem item = menu.findItem(R.id.air_search);
 		item.expandActionView();
 		SearchView sv = (SearchView) MenuItemCompat.getActionView(item);

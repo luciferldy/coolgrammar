@@ -8,7 +8,6 @@ package com.example.coolgrammer;
 
 import android.os.Build;
 import android.os.Bundle;
-import android.R.animator;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
@@ -16,8 +15,6 @@ import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.content.res.Resources.Theme;
-import android.graphics.Color;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.GravityCompat;
@@ -29,7 +26,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
 import android.view.View;
-import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 
 import java.io.File;
@@ -41,7 +37,6 @@ import java.util.HashMap;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.example.adapter.MainViewPagerAdapter;
-import com.example.coolgrammer.R.color;
 import com.example.listener.MainDrawerItemClickListener;
 
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
