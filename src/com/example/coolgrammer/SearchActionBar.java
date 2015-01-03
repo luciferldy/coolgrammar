@@ -11,8 +11,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
-import android.widget.Toast;
-
 import com.example.thread.CloudTranslateJsonParsonRunnable;
 /**
  * ActionBar实现搜索
@@ -63,7 +61,14 @@ public class SearchActionBar extends Activity {
 						loading_translate.setVisibility(View.VISIBLE);
 						translate_result.setVisibility(View.GONE);
 						Thread thread = new Thread(new CloudTranslateJsonParsonRunnable(translate_result, getApplicationContext(),
-								arg0.trim(), handler, loading_translate));
+								arg0.trim(), handler, loading_translate, "dictionary_entozh"));
+						thread.start();
+					}
+					else{
+						loading_translate.setVisibility(View.VISIBLE);
+						translate_result.setVisibility(View.GONE);
+						Thread thread = new Thread(new CloudTranslateJsonParsonRunnable(translate_result, getApplicationContext(),
+								arg0.trim(), handler, loading_translate, "dictionary_zhtoen"));
 						thread.start();
 					}
 					return true;
@@ -104,7 +109,7 @@ public class SearchActionBar extends Activity {
 				
 			}
 			else {
-				Toast.makeText(this, "请输入一个单词", Toast.LENGTH_SHORT).show();
+//				Toast.makeText(this, "请输入一个单词", Toast.LENGTH_SHORT).show();
 				return false;
 			}
 		}

@@ -19,7 +19,7 @@
         android:layout_marginRight="10sp"
         android:textColor="#969696"
         android:textSize="18sp"
-        android:text="du"/>
+        android:text="am"/>
     <TextView
         android:id="@+id/ph_en"
         android:layout_toRightOf="@id/ph_am"
@@ -31,7 +31,7 @@
         android:layout_marginRight="10sp"
         android:textColor="#969696"
         android:textSize="18sp"
-        android:text="du:"/>
+        android:text="en"/>
 
     <TextView 
         android:id="@+id/after_dictionary"

@@ -3,5 +3,5 @@
     <string name="app_name">酷爽语法</string>
     <string name="drawer_open">菜单划开</string>
     <string name="drawer_close">菜单关掉</string>
-    <string name="cloud_translate_hint">请输入一个英文单词</string>
+    <string name="cloud_translate_hint">请输入一个单词</string>
 </resources>
