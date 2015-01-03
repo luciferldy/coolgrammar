@@ -12,6 +12,8 @@ import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 import com.example.coolgrammer.R;
+import com.example.jsonparse.CloudDictionaryFromEntoZhJsonHandle;
+import com.example.jsonparse.CloudDictionaryFromZhtoEnJsonHandle;
 import com.example.jsonparse.CloudDictionaryJsonHandle;
 
 public class CloudTranslateJsonParsonRunnable implements Runnable{
@@ -23,17 +25,25 @@ public class CloudTranslateJsonParsonRunnable implements Runnable{
 	private CloudDictionaryJsonHandle translate;
 	private Context context;
 	private ProgressBar loading_translate;
-	public CloudTranslateJsonParsonRunnable(ListView translate_result,Context context, String keys, Handler handler, ProgressBar loading_translate){
+	private String type;
+	public CloudTranslateJsonParsonRunnable(ListView translate_result, Context context, String keys, Handler handler, 
+			ProgressBar loading_translate, String type){
 		this.translate_result = translate_result;
 		this.keys = keys;
 		this.handler = handler;
 		this.context = context;
 		this.loading_translate = loading_translate;
+		this.type = type;
 	}
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
-		translate = new CloudDictionaryJsonHandle(keys);
+		if(type.equals("dictionary_entozh")){
+			translate = new CloudDictionaryFromEntoZhJsonHandle(keys);
+		}
+		else if (type.equals("dictionary_zhtoen")) {
+			translate = new CloudDictionaryFromZhtoEnJsonHandle(keys);
+		}
 		if (translate.isgetTranslateResult()) {
 			handler.post(new Runnable() {
 				@Override
@@ -54,7 +64,6 @@ public class CloudTranslateJsonParsonRunnable implements Runnable{
 		}
 		else {
 			handler.post(new Runnable() {
-				
 				@Override
 				public void run() {
 					// TODO Auto-generated method stub
