@@ -11,6 +11,7 @@ public class AboutGrammar extends Activity{
 		//添加一个回退键
 //		ActionBar actionBar = getActionBar();
 //		actionBar.setDisplayHomeAsUpEnabled(true);
+	
 	}
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item){
