@@ -9,6 +9,9 @@ import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -87,8 +90,16 @@ public class CloudDictionaryFromZhtoEnJsonHandle implements CloudDictionaryJsonH
 	// 获得词典的解释
 	protected String getDictionaryJsonContent(){
 		HttpClient httpClient = null;
+		
+		// 设置timeout
+		HttpParams params = new BasicHttpParams();
+		int connectionTimeOut = 3000;  // 连接时常
+		HttpConnectionParams.setConnectionTimeout(params, connectionTimeOut);
+		int socketTimeOut = 5000;  // socket连接时常
+		HttpConnectionParams.setSoTimeout(params, socketTimeOut);
+		
 		try {
-			httpClient = new DefaultHttpClient();
+			httpClient = new DefaultHttpClient(params);
 			HttpGet httpGet = new HttpGet(dictionary_url+keys+"&from=zh&to=en");
 			HttpResponse httpResponse = httpClient.execute(httpGet);
 			if (httpResponse.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
