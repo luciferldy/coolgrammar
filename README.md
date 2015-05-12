@@ -7,7 +7,7 @@
 
 [百度手机助手下载地址](http://shouji.baidu.com/soft/item?docid=7201034&from=landing&f=search_app_%E9%85%B7%E7%88%BD%E8%AF%AD%E6%B3%95%40list_1_title%401%40header_all_input)
 
-[最新版本下载地址](http://1.coolgrammar.sinaapp.com/coolgrammar/Coolgrammer.apk)
+[最新版本下载地址](https://gitcafe.com/MaybeMercy/AppLibrary/raw/master/Coolgrammer.apk)
 
 ### 依赖包
 
