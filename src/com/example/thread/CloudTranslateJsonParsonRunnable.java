@@ -18,6 +18,8 @@ import com.example.jsonparse.CloudDictionaryJsonHandle;
 
 public class CloudTranslateJsonParsonRunnable implements Runnable{
 
+	public static final String TRANSLATE_APPID = "20160130000009826";
+	public static final String TRANSALTE_PRIVATE_KEY = "tjd6UXdszzL0iuscUMxH";
 	private Handler handler;
 	private ListView translate_result;
 	private String keys;

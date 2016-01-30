@@ -25,7 +25,7 @@ import android.util.Log;
  * data:[] 这样的是jsonarra
  */
 public class CloudDictionaryFromZhtoEnJsonHandle implements CloudDictionaryJsonHandle{
-	private String dictionary_url="http://openapi.baidu.com/public/2.0/translate/dict/simple?client_id=RCFGRzYNoN00OiGd3UHqLGGS&q=";
+	private String dictionary_url="http://api.fanyi.baidu.com/api/trans/vip/translate?from=en&to=z";
 	private String keys;
 	private ArrayList<HashMap<String, String>> dictionary_result;
 	private boolean ifreturnresult=true;
